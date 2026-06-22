@@ -33,7 +33,10 @@ export default function Download() {
       .catch(() => {/* keep fallback */});
   }, []);
 
-  const href = (a?: Artifact) => `${import.meta.env.BASE_URL}downloads/${a?.file ?? ''}`;
+  const href = (a?: Artifact) =>
+    a?.file && /^https?:\/\//.test(a.file)
+      ? a.file // absolute URL (e.g. a GitHub Releases asset)
+      : `${import.meta.env.BASE_URL}downloads/${a?.file ?? ''}`;
   const sz = (a?: Artifact) => (a?.size ? ` · ${a.size}` : '');
 
   return (

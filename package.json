@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "publish:artifacts": "pwsh scripts/publish-artifacts.ps1",
-    "release": "pwsh scripts/publish-artifacts.ps1 && astro build"
+    "release": "pwsh scripts/publish-artifacts.ps1 && astro build"  
   },
   "dependencies": {
     "@astrojs/react": "^4.2.0",

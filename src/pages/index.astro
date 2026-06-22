@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.tsx';
 import Features from '../components/Features.tsx';
 import Download from '../components/Download.tsx';
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout>
@@ -72,7 +73,7 @@ import Download from '../components/Download.tsx';
         them whenever you need. (A look at the home manager; replaceable later.)
       </p>
       <figure class="home-shot">
-        <img src="/images/home.webp" width="1600" height="847"
+        <img src={`${base}images/home.webp`} width="1600" height="847"
           alt="The on my mind home manager: a board of colorful notes you can search and reopen"
           loading="lazy" decoding="async" />
       </figure>
@@ -95,7 +96,7 @@ import Download from '../components/Download.tsx';
           <span class="float-pin"></span>
           <h3 class="sticky-title">💊 Meds — this week</h3>
           <figure class="note-art">
-            <img src="/images/art-medicine.svg" alt="Hand-drawn capsule and medicinal herb" loading="lazy" />
+            <img src={`${base}images/art-medicine.svg`} alt="Hand-drawn capsule and medicinal herb" loading="lazy" />
           </figure>
           <div class="md">
             <table>
@@ -119,7 +120,7 @@ import Download from '../components/Download.tsx';
           <span class="float-pin"></span>
           <h3 class="sticky-title">🌿 Monstera deliciosa</h3>
           <figure class="note-art">
-            <img src="/images/art-botany.svg" alt="Hand-drawn botanical leaf sprig" loading="lazy" />
+            <img src={`${base}images/art-botany.svg`} alt="Hand-drawn botanical leaf sprig" loading="lazy" />
           </figure>
           <div class="md">
             <p><em>Swiss cheese plant · Araceae</em></p>
@@ -138,7 +139,7 @@ import Download from '../components/Download.tsx';
           <span class="float-pin"></span>
           <h3 class="sticky-title">🧬 Cellular respiration</h3>
           <figure class="note-art">
-            <img src="/images/art-biology.svg" alt="Hand-drawn plant cell diagram" loading="lazy" />
+            <img src={`${base}images/art-biology.svg`} alt="Hand-drawn plant cell diagram" loading="lazy" />
           </figure>
           <div class="md">
             <p>Net yield ≈ <strong>30–32 ATP</strong> per glucose.</p>

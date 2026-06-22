@@ -4,7 +4,7 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   integrations: [react()],
-  // Set `site` + `base` if you deploy under a GitHub Pages subpath, e.g.:
-  // site: 'https://yourname.github.io',
-  // base: '/release-on-my-mind-note-app',
+  // Deployed to GitHub Pages under a project subpath.
+  site: 'https://rohanayush.github.io',
+  base: '/release-on-my-mind-note/',
 });

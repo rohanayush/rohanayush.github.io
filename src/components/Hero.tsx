@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 
 const shots = [
-  { src: '/images/note-view.webp', alt: 'A markdown travel-journal note with an image and a table', rot: -6, x: 0, y: 0, z: 2 },
-  { src: '/images/code-view.webp', alt: 'A note rendering Java, Python and SQL code blocks', rot: 7, x: 150, y: 40, z: 1 },
+  { src: 'images/note-view.webp', alt: 'A markdown travel-journal note with an image and a table', rot: -6, x: 0, y: 0, z: 2 },
+  { src: 'images/code-view.webp', alt: 'A note rendering Java, Python and SQL code blocks', rot: 7, x: 150, y: 40, z: 1 },
 ];
 
 const points = [
@@ -55,7 +55,7 @@ export default function Hero() {
             transition={{ y: { repeat: Infinity, duration: 3 + i * 0.4, ease: 'easeInOut' } }}
           >
             <span className="float-pin" />
-            <img src={s.src} alt={s.alt} loading="eager" />
+            <img src={`${import.meta.env.BASE_URL}${s.src}`} alt={s.alt} loading="eager" />
           </motion.figure>
         ))}
       </div>

@@ -2,18 +2,19 @@
 // Top navigation. Products is live; About & Contact are disabled
 // placeholders for when this site grows into a full portfolio.
 const { pathname } = Astro.url;
-const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
+const base = import.meta.env.BASE_URL;
+const isActive = (href: string) => pathname === href || pathname === href + '/';
 ---
 
 <header class="nav">
   <div class="container nav-inner">
-    <a href="/" class="brand">
+    <a href={base} class="brand">
       <span class="brand-dot"></span>
       on&nbsp;my&nbsp;mind
     </a>
 
     <nav class="nav-links">
-      <a href="/" class:list={["nav-link", { active: isActive('/') }]}>Products</a>
+      <a href={base} class:list={["nav-link", { active: isActive(base) }]}>Products</a>
       <span class="nav-link disabled" aria-disabled="true" title="Coming soon">
         About <em>soon</em>
       </span>
