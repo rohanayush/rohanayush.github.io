@@ -1,10 +1,15 @@
 import { motion } from 'framer-motion';
 
-const notes = [
-  { text: 'Buy milk 🥛', color: '#ffe16b', rot: -8, x: -20, y: 10 },
-  { text: '## Ship v1\n- [x] build\n- [ ] sign', color: '#8ff0c5', rot: 6, x: 130, y: -30 },
-  { text: 'call mom ❤️', color: '#ff8fb1', rot: -3, x: 60, y: 120 },
-  { text: 'idea: portfolio site', color: '#8fb8ff', rot: 9, x: 220, y: 80 },
+const shots = [
+  { src: '/images/note-view.webp', alt: 'A markdown travel-journal note with an image and a table', rot: -6, x: 0, y: 0, z: 2 },
+  { src: '/images/code-view.webp', alt: 'A note rendering Java, Python and SQL code blocks', rot: 7, x: 150, y: 40, z: 1 },
+];
+
+const points = [
+  '📝 Live markdown as you type',
+  '📌 Always on top of everything',
+  '🖼️ Paste images, theme, drag freely',
+  '⚡ Tiny & fast — under 4 MB',
 ];
 
 const container = {
@@ -22,32 +27,36 @@ export default function Hero() {
       <div className="hero-copy">
         <motion.span className="eyebrow" variants={fadeUp}>Product · Windows &amp; macOS</motion.span>
         <motion.h1 className="hero-title" variants={fadeUp}>
-          Sticky notes that stay <span className="hl">on your mind</span> — and on top of every app.
+          The note app that <span className="hl">actually sticks</span> — on your mind, and on top of every app.
         </motion.h1>
         <motion.p className="hero-sub" variants={fadeUp}>
-          StickyNote pins markdown notes above everything on your screen. Jot, check off,
-          paste images, theme them — they never get buried under a window again.
+          on my mind pins fully dynamic markdown notes above everything on your screen.
         </motion.p>
+        <motion.ul className="hero-slabs" variants={fadeUp}>
+          {points.map((p) => (
+            <li key={p} className="slab">{p}</li>
+          ))}
+        </motion.ul>
         <motion.div className="hero-cta" variants={fadeUp}>
           <a className="btn btn-primary" href="#download">↓ Download free</a>
           <a className="btn btn-ghost" href="#features">See features</a>
         </motion.div>
       </div>
 
-      <div className="hero-stage" aria-hidden="true">
-        {notes.map((n, i) => (
-          <motion.div
-            key={i}
-            className="float-note"
-            style={{ background: n.color, left: n.x, top: n.y, rotate: `${n.rot}deg` }}
+      <div className="hero-stage">
+        {shots.map((s, i) => (
+          <motion.figure
+            key={s.src}
+            className="float-shot"
+            style={{ left: s.x, top: s.y, rotate: `${s.rot}deg`, zIndex: s.z }}
             variants={fadeUp}
-            whileHover={{ scale: 1.06, rotate: 0, zIndex: 5 }}
+            whileHover={{ scale: 1.05, rotate: 0, zIndex: 5 }}
             animate={{ y: [0, -8, 0] }}
             transition={{ y: { repeat: Infinity, duration: 3 + i * 0.4, ease: 'easeInOut' } }}
           >
             <span className="float-pin" />
-            <pre>{n.text}</pre>
-          </motion.div>
+            <img src={s.src} alt={s.alt} loading="eager" />
+          </motion.figure>
         ))}
       </div>
     </motion.div>

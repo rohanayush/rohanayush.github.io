@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
 const features = [
-  { icon: '📌', title: 'Always on top', body: 'Notes float above every window — like real sticky notes stuck to your screen.' },
+  { icon: '📌', title: 'Always on top', body: 'Notes float above every window — the note that actually sticks to your screen.' },
   { icon: '✍️', title: 'Markdown editor', body: 'CodeMirror-powered editing with live markdown, checklists and syntax highlighting.' },
   { icon: '🖼️', title: 'Paste & resize images', body: 'Drop or paste images straight into a note and resize them inline.' },
   { icon: '🎨', title: 'Colors & themes', body: 'Classic sticky-note palette with a warm yellow default — pick a vibe per note.' },

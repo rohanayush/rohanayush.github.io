@@ -13,11 +13,153 @@ import Download from '../components/Download.tsx';
     </div>
   </section>
 
+  <!-- ===== WHY ===== -->
+  <section id="why" class="why">
+    <div class="container why-grid">
+      <div class="why-head">
+        <span class="eyebrow">Why on my mind?</span>
+        <h2 class="section-title">Not just another sticky note.</h2>
+        <p class="why-tag">Carefully crafted, with love and attention.</p>
+      </div>
+      <div class="why-copy">
+        <p>
+          on my mind was built to be the <strong>all-in-one note that actually sticks</strong>.
+          It solves a small daily pain: opening a different app for every kind of thing you
+          jot down. Code, an image, a checklist, a table — they all live in one note, rendered
+          live through <strong>dynamic in-place markdown</strong>.
+        </p>
+        <ul class="why-list">
+          <li><strong>Writes anything</strong> — markdown, code blocks, images, inline sizing.</li>
+          <li><strong>Picture-in-picture</strong> — float a note above every app, or pin it to one spot.</li>
+          <li><strong>Yours to shape</strong> — colors, fonts, resizable and flexible.</li>
+          <li><strong>Stays put</strong> — never buried under a window again.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MARKDOWN HIGHLIGHT ===== -->
+  <section class="md-hl">
+    <div class="container">
+      <div class="md-box">
+        <span class="eyebrow">The headline feature</span>
+        <h2 class="section-title">Fully dynamic, in-place markdown.</h2>
+        <p class="section-lead">
+          Type markdown and watch it render as you go — no preview pane, no mode switch.
+          One note speaks every syntax:
+        </p>
+        <div class="md-chips">
+          <span class="chip c-yellow"># Headings</span>
+          <span class="chip c-pink">**bold** &amp; <em>italic</em></span>
+          <span class="chip c-mint">- [x] checklists</span>
+          <span class="chip c-blue">`inline code`</span>
+          <span class="chip c-yellow">```code blocks```</span>
+          <span class="chip c-pink">| tables |</span>
+          <span class="chip c-mint">![ ] images</span>
+          <span class="chip c-blue">&gt; quotes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOME MANAGER ===== -->
+  <section class="home-mgr">
+    <div class="container center">
+      <span class="eyebrow">Mission control</span>
+      <h2 class="section-title">A friendly home for every note.</h2>
+      <p class="section-lead center-lead">
+        Every note you make lands on one calm board — browse, search and relaunch
+        them whenever you need. (A look at the home manager; replaceable later.)
+      </p>
+      <figure class="home-shot">
+        <img src="/images/home.webp" width="1600" height="847"
+          alt="The on my mind home manager: a board of colorful notes you can search and reopen"
+          loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== USE CASES ===== -->
+  <section class="usecases">
+    <div class="container">
+      <span class="eyebrow">Made for real notes</span>
+      <h2 class="section-title">From dosages to dichotomous keys.</h2>
+      <p class="section-lead">
+        Complex, structured notes render beautifully — here's the same markdown engine
+        doing medicine, botany and biology.
+      </p>
+
+      <div class="note-board">
+        <!-- Medicine -->
+        <article class="sticky c-pink rot-a">
+          <span class="float-pin"></span>
+          <h3 class="sticky-title">💊 Meds — this week</h3>
+          <figure class="note-art">
+            <img src="/images/art-medicine.svg" alt="Hand-drawn capsule and medicinal herb" loading="lazy" />
+          </figure>
+          <div class="md">
+            <table>
+              <thead><tr><th>Drug</th><th>Dose</th><th>When</th></tr></thead>
+              <tbody>
+                <tr><td>Metformin</td><td>500 mg</td><td>AM + PM</td></tr>
+                <tr><td>Vitamin D</td><td>2000 IU</td><td>AM</td></tr>
+                <tr><td>Omega-3</td><td>1 g</td><td>PM</td></tr>
+              </tbody>
+            </table>
+            <ul class="task">
+              <li class="done">refill pharmacy</li>
+              <li>book follow-up</li>
+            </ul>
+            <blockquote>⚠️ Take Metformin <strong>with food</strong> to ease nausea.</blockquote>
+          </div>
+        </article>
+
+        <!-- Botany -->
+        <article class="sticky c-mint rot-b">
+          <span class="float-pin"></span>
+          <h3 class="sticky-title">🌿 Monstera deliciosa</h3>
+          <figure class="note-art">
+            <img src="/images/art-botany.svg" alt="Hand-drawn botanical leaf sprig" loading="lazy" />
+          </figure>
+          <div class="md">
+            <p><em>Swiss cheese plant · Araceae</em></p>
+            <h4>Care</h4>
+            <ul>
+              <li>Light — bright, indirect ☀️</li>
+              <li>Water — when top <code>5 cm</code> dries</li>
+              <li>Humidity — <strong>60%+</strong></li>
+            </ul>
+            <blockquote>New fenestrations appear once it can climb — give it a moss pole.</blockquote>
+          </div>
+        </article>
+
+        <!-- Biology -->
+        <article class="sticky c-blue rot-c">
+          <span class="float-pin"></span>
+          <h3 class="sticky-title">🧬 Cellular respiration</h3>
+          <figure class="note-art">
+            <img src="/images/art-biology.svg" alt="Hand-drawn plant cell diagram" loading="lazy" />
+          </figure>
+          <div class="md">
+            <p>Net yield ≈ <strong>30–32 ATP</strong> per glucose.</p>
+            <ol>
+              <li>Glycolysis → pyruvate</li>
+              <li>Krebs cycle → NADH, FADH₂</li>
+              <li>Electron transport chain</li>
+            </ol>
+            <pre class="code">C₆H₁₂O₆ + 6O₂
+  → 6CO₂ + 6H₂O + ATP</pre>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section id="features" class="features">
     <div class="container">
       <span class="eyebrow">Everything it does</span>
       <h2 class="section-title">Small app, surprisingly capable.</h2>
-      <p class="section-lead">StickyNote is built with Tauri + Vue for a tiny footprint and native speed.</p>
+      <p class="section-lead">on my mind is built with Tauri + Vue for a tiny footprint and native speed.</p>
       <Features client:visible />
     </div>
   </section>
@@ -25,7 +167,7 @@ import Download from '../components/Download.tsx';
   <section id="download" class="download">
     <div class="container">
       <span class="eyebrow">Get it free</span>
-      <h2 class="section-title">Download StickyNote.</h2>
+      <h2 class="section-title">Download on my mind.</h2>
       <p class="section-lead">Pick installer, portable, or MSI. No account, no cost.</p>
       <Download client:visible />
     </div>
@@ -43,16 +185,32 @@ import Download from '../components/Download.tsx';
   :global(.hero-title) { font-size: clamp(2.2rem, 5.5vw, 4rem); font-weight: 800; letter-spacing: -0.03em; margin: 1rem 0; }
   :global(.hl) { color: var(--accent); }
   :global(.hero-sub) { color: var(--muted); font-size: 1.12rem; max-width: 52ch; }
+  :global(.hero-slabs) {
+    list-style: none; padding: 0; margin: 1.6rem 0 0; max-width: 30rem;
+    display: grid; grid-template-columns: 1fr; gap: 0.65rem;
+  }
+  :global(.hero-slabs .slab) {
+    padding: 0.95rem 1.2rem; border-radius: 12px;
+    font-size: 1.05rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em;
+    color: var(--ink); border: 1px solid var(--line);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  /* sublime, low-contrast note tints — easy on the eyes */
+  :global(.hero-slabs .slab:nth-child(1)) { background: rgba(255, 225, 107, 0.10); border-color: rgba(255, 225, 107, 0.22); }
+  :global(.hero-slabs .slab:nth-child(2)) { background: rgba(143, 184, 255, 0.10); border-color: rgba(143, 184, 255, 0.22); }
+  :global(.hero-slabs .slab:nth-child(3)) { background: rgba(143, 240, 197, 0.10); border-color: rgba(143, 240, 197, 0.22); }
+  :global(.hero-slabs .slab:nth-child(4)) { background: rgba(255, 143, 177, 0.10); border-color: rgba(255, 143, 177, 0.22); }
   :global(.hero-cta) { display: flex; gap: 0.8rem; margin-top: 1.8rem; flex-wrap: wrap; }
   :global(.hero-stage) { position: relative; height: 360px; }
-  :global(.float-note) {
-    position: absolute; width: 150px; min-height: 110px; padding: 1rem 0.9rem;
-    border-radius: 8px; color: #1a1606; box-shadow: 0 18px 40px -16px rgba(0,0,0,0.6);
+  :global(.float-shot) { position: absolute; width: 230px; margin: 0; }
+  :global(.float-shot img) {
+    display: block; width: 100%; height: 300px; object-fit: cover; object-position: top;
+    border-radius: 12px; box-shadow: 0 24px 50px -18px rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.08);
   }
-  :global(.float-note pre) { margin: 0; font-family: var(--font); font-size: 0.86rem; white-space: pre-wrap; font-weight: 600; }
   :global(.float-pin) {
-    position: absolute; top: -7px; left: 50%; width: 14px; height: 14px; border-radius: 50%;
-    background: #c0392b; box-shadow: 0 2px 4px rgba(0,0,0,0.4); transform: translateX(-50%);
+    position: absolute; top: -9px; left: 50%; width: 2px; height: 16px; border-radius: 2px;
+    background: #c0392b; box-shadow: 0 2px 4px rgba(0,0,0,0.4); transform: translateX(-50%) rotate(8deg);
   }
 
   /* Features grid */
@@ -84,7 +242,114 @@ import Download from '../components/Download.tsx';
   }
   :global(.dl-meta) { grid-column: 1 / -1; color: var(--muted); font-size: 0.82rem; margin-top: 1rem; text-align: center; }
 
+  .center { text-align: center; }
+  .center-lead { margin-left: auto; margin-right: auto; }
+
+  /* ---- Why ---- */
+  .why-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 2.5rem; align-items: start; }
+  .why-tag { color: var(--accent); font-style: italic; font-size: 0.95rem; margin-top: 0.8rem; }
+  .why-copy p { color: var(--ink); font-size: 1.12rem; line-height: 1.6; margin: 0 0 1.4rem; }
+  .why-copy strong { color: var(--accent); font-weight: 700; }
+  .why-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.7rem; }
+  .why-list li { position: relative; padding-left: 1.6rem; color: var(--muted); line-height: 1.5; }
+  .why-list strong { color: var(--ink); }
+  .why-list li::before {
+    content: ''; position: absolute; left: 0; top: 0.55em; width: 0.85rem; height: 2px;
+    border-radius: 2px; background: var(--accent);
+  }
+
+  /* ---- Markdown highlight (colorful box) ---- */
+  .md-hl { padding-top: 0; }
+  .md-box {
+    border-radius: 24px; padding: clamp(1.6rem, 4vw, 3rem); position: relative; overflow: hidden;
+    background:
+      radial-gradient(700px 300px at 100% 0%, rgba(143,240,197,0.16), transparent 60%),
+      radial-gradient(600px 300px at 0% 100%, rgba(143,184,255,0.16), transparent 60%),
+      linear-gradient(135deg, rgba(255,225,107,0.10), rgba(255,143,177,0.10));
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+  .md-box .section-lead { margin-bottom: 1.6rem; }
+  .md-chips { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+  .chip {
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace; font-size: 0.92rem;
+    font-weight: 600; color: #1a1606; padding: 0.5rem 0.85rem; border-radius: 10px;
+    box-shadow: 0 8px 20px -10px rgba(0,0,0,0.6);
+  }
+  .chip em { font-style: italic; }
+  .c-yellow { background: var(--note-yellow); }
+  .c-pink   { background: var(--note-pink); }
+  .c-mint   { background: var(--note-mint); }
+  .c-blue   { background: var(--note-blue); }
+
+  /* ---- Home manager ---- */
+  .home-shot {
+    margin: 2.4rem auto 0; max-width: 980px; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--line); box-shadow: 0 40px 80px -30px rgba(0,0,0,0.8);
+  }
+  .home-shot img { display: block; width: 100%; height: auto; }
+
+  /* ---- Use case sticky notes ---- */
+  .note-board {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; align-items: start; margin-top: 0.5rem;
+  }
+  .sticky {
+    position: relative; color: #1a1606; border-radius: 10px; padding: 1.3rem 1.2rem 1.4rem;
+    box-shadow: 0 22px 46px -18px rgba(0,0,0,0.7); transition: transform 0.18s ease;
+  }
+  .sticky.c-yellow { background: var(--note-yellow); }
+  .sticky.c-pink   { background: var(--note-pink); }
+  .sticky.c-mint   { background: var(--note-mint); }
+  .sticky.c-blue   { background: var(--note-blue); }
+  .rot-a { transform: rotate(-2deg); }
+  .rot-b { transform: rotate(1.5deg); }
+  .rot-c { transform: rotate(-1deg); }
+  .sticky:hover { transform: rotate(0) translateY(-4px); }
+  .sticky .float-pin {
+    position: absolute; top: -9px; left: 50%; width: 2px; height: 16px; border-radius: 2px;
+    background: #c0392b; box-shadow: 0 2px 4px rgba(0,0,0,0.4); transform: translateX(-50%) rotate(8deg);
+  }
+  .sticky-title { font-size: 1.08rem; font-weight: 800; margin-bottom: 0.7rem; }
+
+  /* hand-drawn botanical print inside the note */
+  .note-art { margin: 0 0 0.9rem; }
+  .note-art img {
+    display: block; width: 100%; height: auto; border-radius: 6px;
+    box-shadow: 0 6px 14px -8px rgba(0,0,0,0.45);
+  }
+
+  .md { font-size: 0.88rem; line-height: 1.5; }
+  .md p { margin: 0 0 0.6rem; }
+  .md em { font-style: italic; opacity: 0.85; }
+  .md h4 { font-size: 0.92rem; font-weight: 800; margin: 0.7rem 0 0.4rem; }
+  .md ul, .md ol { margin: 0 0 0.6rem; padding-left: 1.2rem; }
+  .md li { margin: 0.15rem 0; }
+  .md code {
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace; font-size: 0.82em;
+    background: rgba(0,0,0,0.12); padding: 0.05rem 0.3rem; border-radius: 4px;
+  }
+  .md pre.code {
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace; font-size: 0.78rem;
+    background: rgba(0,0,0,0.16); border-radius: 8px; padding: 0.7rem 0.8rem; margin: 0;
+    white-space: pre-wrap; line-height: 1.4;
+  }
+  .md table { width: 100%; border-collapse: collapse; margin: 0 0 0.7rem; font-size: 0.82rem; }
+  .md th, .md td { border: 1px solid rgba(0,0,0,0.18); padding: 0.3rem 0.45rem; text-align: left; }
+  .md th { background: rgba(0,0,0,0.10); font-weight: 800; }
+  .md blockquote {
+    margin: 0; padding: 0.4rem 0.7rem; border-left: 3px solid rgba(0,0,0,0.35);
+    background: rgba(0,0,0,0.08); border-radius: 0 6px 6px 0; font-size: 0.84rem;
+  }
+  .md ul.task { list-style: none; padding-left: 0.1rem; }
+  .md ul.task li { position: relative; padding-left: 1.5rem; }
+  .md ul.task li::before {
+    content: '☐'; position: absolute; left: 0; top: -0.05em; font-size: 1rem;
+  }
+  .md ul.task li.done { opacity: 0.6; text-decoration: line-through; }
+  .md ul.task li.done::before { content: '☑'; }
+
   @media (max-width: 900px) {
+    .why-grid { grid-template-columns: 1fr; gap: 1.4rem; }
+    .note-board { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
     :global(.hero-grid) { grid-template-columns: 1fr; }
     :global(.hero-stage) { height: 300px; }
     :global(.feat-grid) { grid-template-columns: repeat(2, 1fr); }

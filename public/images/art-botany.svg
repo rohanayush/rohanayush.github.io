@@ -1,0 +1,27 @@
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hand-drawn botanical sprig">
+  <rect width="320" height="180" fill="#f4e8cf"/>
+  <g fill="none" stroke="#5e3d22" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- main stem -->
+    <path d="M160 172 C150 132 152 96 162 56 C166 42 168 30 166 18" stroke-width="2.6"/>
+    <!-- leaves: definition reused via copies -->
+    <g fill="#bfe0bd" fill-opacity="0.55">
+      <g transform="translate(162,52) rotate(-38)">
+        <path d="M0 0 C-20 -16 -20 -44 0 -62 C20 -44 20 -16 0 0 Z"/>
+        <path d="M0 -4 L0 -56" fill="none"/>
+        <path d="M0 -18 L-11 -26 M0 -30 L-12 -40 M0 -18 L11 -26 M0 -30 L12 -40" fill="none" stroke-width="1.4"/>
+      </g>
+      <g transform="translate(160,88) rotate(40)">
+        <path d="M0 0 C-20 -16 -20 -44 0 -62 C20 -44 20 -16 0 0 Z"/>
+        <path d="M0 -4 L0 -56" fill="none"/>
+        <path d="M0 -18 L-11 -26 M0 -30 L-12 -40 M0 -18 L11 -26 M0 -30 L12 -40" fill="none" stroke-width="1.4"/>
+      </g>
+      <g transform="translate(158,124) rotate(-34)">
+        <path d="M0 0 C-17 -14 -17 -38 0 -54 C17 -38 17 -14 0 0 Z"/>
+        <path d="M0 -4 L0 -48" fill="none"/>
+        <path d="M0 -16 L-10 -23 M0 -26 L-10 -34 M0 -16 L10 -23 M0 -26 L10 -34" fill="none" stroke-width="1.4"/>
+      </g>
+    </g>
+    <!-- top bud -->
+    <path d="M166 18 C158 10 158 0 166 -4 C174 0 174 10 166 18 Z" fill="#e7b3c4" fill-opacity="0.7"/>
+  </g>
+</svg>
