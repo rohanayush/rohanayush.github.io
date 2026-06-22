@@ -1,16 +1,16 @@
 {
   "version": "0.1.0",
-  "builtAt": "2026-06-22",
+  "builtAt": "2026-06-23",
   "installer": {
-    "file": "StickyNote-Setup.exe",
+    "file": "https://github.com/rohanayush/release-on-my-mind-note/releases/download/v0.1.0/StickyNote-Setup.exe",
     "size": "3.9 MB"
   },
   "portable": {
-    "file": "StickyNote-Portable.exe",
+    "file": "https://github.com/rohanayush/release-on-my-mind-note/releases/download/v0.1.0/StickyNote-Portable.exe",
     "size": "14.9 MB"
   },
   "msi": {
-    "file": "StickyNote.msi",
+    "file": "https://github.com/rohanayush/release-on-my-mind-note/releases/download/v0.1.0/StickyNote.msi",
     "size": "5.4 MB"
   }
 }

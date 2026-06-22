@@ -11,11 +11,12 @@ type Manifest = {
 };
 
 // Defaults match what scripts/publish-artifacts.ps1 copies into public/downloads.
+const REL = 'https://github.com/rohanayush/release-on-my-mind-note/releases/download/v0.1.0';
 const FALLBACK: Manifest = {
   version: '0.1.0',
-  installer: { file: 'StickyNote-Setup.exe', size: '' },
-  msi: { file: 'StickyNote.msi', size: '' },
-  portable: { file: 'StickyNote-Portable.exe', size: '' },
+  installer: { file: `${REL}/StickyNote-Setup.exe`, size: '3.9 MB' },
+  msi: { file: `${REL}/StickyNote.msi`, size: '5.4 MB' },
+  portable: { file: `${REL}/StickyNote-Portable.exe`, size: '14.9 MB' },
 };
 
 const card = {
