@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+// Disabled for now — placeholder for the upcoming portfolio.
+---
+<Layout title="Contact — coming soon">
+  <section class="soon">
+    <div class="container">
+      <span class="eyebrow">Disabled · in progress</span>
+      <h1>Contact is coming soon.</h1>
+      <p>Ways to reach out will land here alongside the portfolio. Thanks for your patience.</p>
+      <a class="btn btn-primary" href="/">← Back to Products</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .soon { min-height: 60vh; display: grid; align-items: center; }
+  .soon h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; margin: 0.6rem 0 1rem; }
+  .soon p { color: var(--muted); max-width: 46ch; margin-bottom: 2rem; font-size: 1.05rem; }
+</style>

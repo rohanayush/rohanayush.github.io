@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.tsx';
+import Features from '../components/Features.tsx';
+import Download from '../components/Download.tsx';
+---
+
+<Layout>
+  <!-- ===== PRODUCTS (live) ===== -->
+  <section class="hero">
+    <div class="container">
+      <Hero client:load />
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <div class="container">
+      <span class="eyebrow">Everything it does</span>
+      <h2 class="section-title">Small app, surprisingly capable.</h2>
+      <p class="section-lead">StickyNote is built with Tauri + Vue for a tiny footprint and native speed.</p>
+      <Features client:visible />
+    </div>
+  </section>
+
+  <section id="download" class="download">
+    <div class="container">
+      <span class="eyebrow">Get it free</span>
+      <h2 class="section-title">Download StickyNote.</h2>
+      <p class="section-lead">Pick installer, portable, or MSI. No account, no cost.</p>
+      <Download client:visible />
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -0.02em; margin-top: 0.4rem; }
+  .section-lead { color: var(--muted); max-width: 48ch; margin: 0.8rem 0 2.6rem; font-size: 1.05rem; }
+
+  .hero { padding-top: 3.5rem; }
+
+  /* Hero island layout (classes used inside Hero.tsx) */
+  :global(.hero-grid) { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2rem; align-items: center; }
+  :global(.hero-title) { font-size: clamp(2.2rem, 5.5vw, 4rem); font-weight: 800; letter-spacing: -0.03em; margin: 1rem 0; }
+  :global(.hl) { color: var(--accent); }
+  :global(.hero-sub) { color: var(--muted); font-size: 1.12rem; max-width: 52ch; }
+  :global(.hero-cta) { display: flex; gap: 0.8rem; margin-top: 1.8rem; flex-wrap: wrap; }
+  :global(.hero-stage) { position: relative; height: 360px; }
+  :global(.float-note) {
+    position: absolute; width: 150px; min-height: 110px; padding: 1rem 0.9rem;
+    border-radius: 8px; color: #1a1606; box-shadow: 0 18px 40px -16px rgba(0,0,0,0.6);
+  }
+  :global(.float-note pre) { margin: 0; font-family: var(--font); font-size: 0.86rem; white-space: pre-wrap; font-weight: 600; }
+  :global(.float-pin) {
+    position: absolute; top: -7px; left: 50%; width: 14px; height: 14px; border-radius: 50%;
+    background: #c0392b; box-shadow: 0 2px 4px rgba(0,0,0,0.4); transform: translateX(-50%);
+  }
+
+  /* Features grid */
+  :global(.feat-grid) { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  :global(.feat-card) {
+    background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 1.4rem; transition: border-color 0.2s ease;
+  }
+  :global(.feat-card:hover) { border-color: rgba(255, 214, 77, 0.4); }
+  :global(.feat-icon) { font-size: 1.8rem; }
+  :global(.feat-card h3) { font-size: 1.05rem; margin: 0.7rem 0 0.4rem; }
+  :global(.feat-card p) { color: var(--muted); font-size: 0.9rem; margin: 0; line-height: 1.5; }
+
+  /* Download grid */
+  :global(.dl-wrap) { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  :global(.dl-card) {
+    position: relative; background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 1.6rem; display: flex; flex-direction: column; gap: 0.6rem;
+  }
+  :global(.dl-card.recommended) { border-color: rgba(255, 214, 77, 0.5); box-shadow: 0 0 0 1px rgba(255,214,77,0.15); }
+  :global(.dl-card h3) { font-size: 1.2rem; }
+  :global(.dl-card p) { color: var(--muted); font-size: 0.92rem; margin: 0; flex: 1; line-height: 1.5; }
+  :global(.dl-card .btn) { margin-top: 0.4rem; justify-content: center; }
+  :global(.dl-card small) { color: var(--muted); font-size: 0.78rem; }
+  :global(.dl-badge) {
+    position: absolute; top: -10px; right: 14px; background: var(--accent); color: #1a1606;
+    font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 0.25rem 0.6rem; border-radius: 999px;
+  }
+  :global(.dl-meta) { grid-column: 1 / -1; color: var(--muted); font-size: 0.82rem; margin-top: 1rem; text-align: center; }
+
+  @media (max-width: 900px) {
+    :global(.hero-grid) { grid-template-columns: 1fr; }
+    :global(.hero-stage) { height: 300px; }
+    :global(.feat-grid) { grid-template-columns: repeat(2, 1fr); }
+    :global(.dl-wrap) { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    :global(.feat-grid) { grid-template-columns: 1fr; }
+  }
+</style>

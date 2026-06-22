@@ -1,0 +1,25 @@
+{
+  "name": "release-on-my-mind-note-app",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Showcase / release site for StickyNote — built with Astro. Will grow into a portfolio.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "publish:artifacts": "pwsh scripts/publish-artifacts.ps1",
+    "release": "pwsh scripts/publish-artifacts.ps1 && astro build"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.2.0",
+    "astro": "^5.5.0",
+    "framer-motion": "^11.15.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  }
+}

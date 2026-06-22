@@ -1,0 +1,86 @@
+---
+// Top navigation. Products is live; About & Contact are disabled
+// placeholders for when this site grows into a full portfolio.
+const { pathname } = Astro.url;
+const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
+---
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand">
+      <span class="brand-dot"></span>
+      on&nbsp;my&nbsp;mind
+    </a>
+
+    <nav class="nav-links">
+      <a href="/" class:list={["nav-link", { active: isActive('/') }]}>Products</a>
+      <span class="nav-link disabled" aria-disabled="true" title="Coming soon">
+        About <em>soon</em>
+      </span>
+      <span class="nav-link disabled" aria-disabled="true" title="Coming soon">
+        Contact <em>soon</em>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+    background: rgba(14, 13, 19, 0.7);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-size: 1.05rem;
+  }
+  .brand-dot {
+    width: 12px; height: 12px; border-radius: 4px;
+    background: var(--note-yellow);
+    box-shadow: 0 0 0 4px rgba(255, 225, 107, 0.18);
+    transform: rotate(-8deg);
+  }
+  .nav-links { display: flex; align-items: center; gap: 0.4rem; }
+  .nav-link {
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--muted);
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .nav-link:not(.disabled):hover { color: var(--ink); background: rgba(255,255,255,0.05); }
+  .nav-link.active { color: #1a1606; background: var(--accent); }
+  .nav-link.disabled {
+    color: rgba(154, 147, 168, 0.5);
+    cursor: not-allowed;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .nav-link.disabled em {
+    font-style: normal;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.1rem 0.35rem;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.06);
+  }
+  @media (max-width: 560px) {
+    .nav-link.disabled em { display: none; }
+  }
+</style>

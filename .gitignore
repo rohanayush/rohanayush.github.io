@@ -1,0 +1,12 @@
+# build output
+dist/
+# dependencies
+node_modules/
+# astro
+.astro/
+# release artifacts (large binaries — host them on GitHub Releases instead)
+public/downloads/*.exe
+public/downloads/*.msi
+# env
+.env
+.env.production
