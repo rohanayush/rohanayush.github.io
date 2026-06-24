@@ -80,6 +80,39 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 
+  <!-- ===== MINIMIZE ANIMATION (pure CSS) ===== -->
+  <section class="minimize">
+    <div class="container minimize-grid">
+      <div class="minimize-copy">
+        <span class="eyebrow">Little moments of delight</span>
+        <h2 class="section-title">Tucks away with a flourish.</h2>
+        <p class="section-lead">
+          Done with a note? It doesn't just blink out — it pinches in and gets
+          whisked down to your board with a buttery, macOS-style genie squeeze.
+          That same care lives in every animation across the app.
+        </p>
+        <ul class="mini-points">
+          <li>GPU-smooth <strong>transform + opacity</strong> — never janky.</li>
+          <li>Drops you back on the home board, note already saved.</li>
+          <li>Springy hovers, a dangling sticky-note loader, and more.</li>
+        </ul>
+      </div>
+
+      <div class="minimize-stage" aria-hidden="true">
+        <div class="mini-note">
+          <span class="mini-pin"></span>
+          <span class="mini-bar"></span>
+          <span class="mini-lines">
+            <span></span><span></span><span></span><span></span>
+          </span>
+        </div>
+        <div class="mini-board">
+          <span class="mini-slot"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== USE CASES ===== -->
   <section class="usecases">
     <div class="container">
@@ -162,6 +195,65 @@ const base = import.meta.env.BASE_URL;
       <h2 class="section-title">Small app, surprisingly capable.</h2>
       <p class="section-lead">on my mind is built with Tauri + Vue for a tiny footprint and native speed.</p>
       <Features client:visible />
+    </div>
+  </section>
+
+  <!-- ===== SHORTCUTS (pure CSS keycaps) ===== -->
+  <section id="shortcuts" class="shortcuts">
+    <div class="container">
+      <span class="eyebrow">Muscle memory</span>
+      <h2 class="section-title">Keyboard shortcuts.</h2>
+      <p class="section-lead">Fly through notes without reaching for the mouse. Hover a card to watch the keys press.</p>
+
+      <div class="sc-grid">
+        <div class="sc-row">
+          <span class="keys"><kbd>Ctrl</kbd><i>+</i><kbd>Shift</kbd><i>+</i><kbd>N</kbd></span>
+          <span class="sc-desc">
+            <strong>New note, from anywhere</strong>
+            <span>A system-wide shortcut spawns a fresh note even when on my mind isn't focused.</span>
+          </span>
+        </div>
+
+        <div class="sc-row">
+          <span class="keys"><kbd>Ctrl</kbd><i>+</i><kbd class="k-wide">Enter</kbd></span>
+          <span class="sc-desc">
+            <strong>Format &amp; continue</strong>
+            <span>Finish the current line, render it in place, and flow straight into a fresh block below.</span>
+          </span>
+        </div>
+
+        <div class="sc-row">
+          <span class="keys"><kbd class="k-wide">Enter</kbd></span>
+          <span class="sc-desc">
+            <strong>New block</strong>
+            <span>Starts a clean, separate block so the line above stays beautifully rendered.</span>
+          </span>
+        </div>
+
+        <div class="sc-row">
+          <span class="keys"><kbd>Shift</kbd><i>+</i><kbd class="k-wide">Enter</kbd></span>
+          <span class="sc-desc">
+            <strong>Soft line break</strong>
+            <span>Drop to the next line <em>inside</em> the same block — perfect for lists and verse.</span>
+          </span>
+        </div>
+
+        <div class="sc-row">
+          <span class="keys"><kbd>Ctrl</kbd><i>+</i><kbd>Z</kbd><i>/</i><kbd>Y</kbd></span>
+          <span class="sc-desc">
+            <strong>Undo &amp; redo</strong>
+            <span>Full history on every note — step back and forth through your edits freely.</span>
+          </span>
+        </div>
+
+        <div class="sc-row">
+          <span class="keys"><kbd class="k-mouse">⟀</kbd><i>drag</i></span>
+          <span class="sc-desc">
+            <strong>Move &amp; resize</strong>
+            <span>Drag the title bar to reposition; grab an edge to resize — unless the note is locked.</span>
+          </span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -348,7 +440,108 @@ const base = import.meta.env.BASE_URL;
   .md ul.task li.done { opacity: 0.6; text-decoration: line-through; }
   .md ul.task li.done::before { content: '☑'; }
 
+  /* ---- Minimize animation demo (pure CSS) ---- */
+  .minimize-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 2.6rem; align-items: center; }
+  .mini-points { list-style: none; padding: 0; margin: 1.4rem 0 0; display: grid; gap: 0.7rem; }
+  .mini-points li { position: relative; padding-left: 1.6rem; color: var(--muted); line-height: 1.5; }
+  .mini-points strong { color: var(--ink); font-weight: 700; }
+  .mini-points li::before {
+    content: ''; position: absolute; left: 0; top: 0.5em; width: 0.85rem; height: 2px;
+    border-radius: 2px; background: var(--accent);
+  }
+  .minimize-stage {
+    position: relative; height: 320px; border-radius: 20px; overflow: hidden;
+    background:
+      radial-gradient(420px 200px at 50% 0%, rgba(143,184,255,0.10), transparent 60%),
+      var(--bg-soft);
+    border: 1px solid var(--line);
+  }
+  .mini-note {
+    position: absolute; top: 28px; left: 50%; width: 210px; height: 196px; margin-left: -105px;
+    border-radius: 14px; padding: 16px;
+    background: linear-gradient(158deg, var(--note-yellow), #f6c343);
+    box-shadow: 0 24px 50px -18px rgba(0,0,0,0.75);
+    transform-origin: bottom center;
+    animation: site-squeeze 4.6s cubic-bezier(0.5, 0, 0.75, 0.2) infinite;
+    will-change: transform, opacity;
+  }
+  .mini-pin {
+    position: absolute; top: -8px; left: 50%; width: 3px; height: 16px; border-radius: 2px;
+    background: #c0392b; box-shadow: 0 2px 4px rgba(0,0,0,0.4); transform: translateX(-50%) rotate(8deg);
+  }
+  .mini-bar { display: block; width: 58%; height: 11px; border-radius: 5px; background: rgba(0,0,0,0.20); margin-bottom: 16px; }
+  .mini-lines { display: grid; gap: 11px; }
+  .mini-lines > span { height: 9px; border-radius: 5px; background: rgba(0,0,0,0.14); }
+  .mini-lines > span:nth-child(1) { width: 92%; }
+  .mini-lines > span:nth-child(2) { width: 76%; }
+  .mini-lines > span:nth-child(3) { width: 85%; }
+  .mini-lines > span:nth-child(4) { width: 52%; }
+  .mini-board {
+    position: absolute; left: 22px; right: 22px; bottom: 20px; height: 56px; border-radius: 12px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mini-slot {
+    width: 48px; height: 32px; border-radius: 8px;
+    background: rgba(255,225,107,0.16); border: 1px dashed rgba(255,225,107,0.55);
+    animation: slot-pulse 4.6s ease infinite;
+  }
+  /* the genie squeeze, mirrored from the app's note-minimizing keyframes */
+  @keyframes site-squeeze {
+    0%, 16%  { transform: scale(1, 1) translateY(0); opacity: 1; }
+    42%      { transform: scale(0.5, 0.9) translateY(8%); opacity: 1; }
+    58%      { transform: scale(0.05, 0.18) translateY(150%); opacity: 0; }
+    74%      { transform: scale(0.05, 0.18) translateY(150%); opacity: 0; }
+    90%, 100%{ transform: scale(1, 1) translateY(0); opacity: 1; }
+  }
+  @keyframes slot-pulse {
+    0%, 42%  { box-shadow: 0 0 0 0 rgba(255,225,107,0); transform: scale(1); }
+    58%      { box-shadow: 0 0 0 7px rgba(255,225,107,0.22); transform: scale(1.08); }
+    74%, 100%{ box-shadow: 0 0 0 0 rgba(255,225,107,0); transform: scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mini-note, .mini-slot { animation: none; }
+  }
+
+  /* ---- Keyboard shortcuts (pure CSS keycaps) ---- */
+  .sc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 0.4rem; }
+  .sc-row {
+    display: flex; align-items: center; gap: 1.15rem; padding: 1.1rem 1.25rem;
+    background: var(--bg-soft); border: 1px solid var(--line); border-radius: 14px;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .sc-row:hover { border-color: rgba(255,214,77,0.45); transform: translateY(-3px); box-shadow: 0 18px 40px -26px rgba(0,0,0,0.9); }
+  .keys { display: inline-flex; align-items: center; gap: 0.34rem; flex-shrink: 0; }
+  .keys i { font-style: normal; color: var(--muted); font-weight: 700; font-size: 0.82rem; }
+  .keys kbd {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 2.3em; height: 2.3em; padding: 0 0.6em;
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace; font-weight: 700; font-size: 0.9rem;
+    color: var(--ink); background: linear-gradient(#2b2634, #1a1723);
+    border: 1px solid rgba(255,255,255,0.14); border-radius: 9px;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .keys kbd.k-wide { min-width: 3.6em; }
+  .keys kbd.k-mouse { font-size: 1.1rem; }
+  /* press the keys in sequence on hover */
+  .sc-row:hover .keys kbd { animation: keypress 0.85s ease; }
+  .sc-row:hover .keys kbd:nth-of-type(2) { animation-delay: 0.09s; }
+  .sc-row:hover .keys kbd:nth-of-type(3) { animation-delay: 0.18s; }
+  @keyframes keypress {
+    0%, 100% { transform: translateY(0); box-shadow: 0 3px 0 rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08); }
+    32%      { transform: translateY(3px); box-shadow: 0 0 0 rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08); background: linear-gradient(#3a3247, #221d2c); }
+  }
+  .sc-desc { display: flex; flex-direction: column; gap: 0.22rem; }
+  .sc-desc strong { font-size: 1rem; font-weight: 700; }
+  .sc-desc > span { color: var(--muted); font-size: 0.88rem; line-height: 1.45; }
+  .sc-desc em { font-style: italic; color: var(--ink); }
+  @media (prefers-reduced-motion: reduce) {
+    .sc-row:hover .keys kbd { animation: none; }
+  }
+
   @media (max-width: 900px) {
+    .minimize-grid { grid-template-columns: 1fr; gap: 1.6rem; }
+    .sc-grid { grid-template-columns: 1fr; }
     .why-grid { grid-template-columns: 1fr; gap: 1.4rem; }
     .note-board { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
     :global(.hero-grid) { grid-template-columns: 1fr; }

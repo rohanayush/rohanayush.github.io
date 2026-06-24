@@ -25,7 +25,7 @@ export default function Hero() {
   return (
     <motion.div className="hero-grid" variants={container} initial="hidden" animate="show">
       <div className="hero-copy">
-        <motion.span className="eyebrow" variants={fadeUp}>Product · Windows &amp; macOS</motion.span>
+        <motion.span className="eyebrow" variants={fadeUp}>Product · Windows</motion.span>
         <motion.h1 className="hero-title" variants={fadeUp}>
           The note app that <span className="hl">actually sticks</span> — on your mind, and on top of every app.
         </motion.h1>
