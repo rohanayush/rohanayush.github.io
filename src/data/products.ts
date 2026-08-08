@@ -5,7 +5,7 @@
 // release/<slug>/ with these exact names, ready to upload to `releaseTag`.
 // Keep `file` here in sync with the names the script writes.
 
-const REL = 'https://github.com/rohanayush/release-on-my-mind-note/releases/download';
+const REL = 'https://github.com/rohanayush/rohanayush.github.io/releases/download';
 
 export type Download = {
   /** Absolute URL (GitHub Releases asset) or a file name under public/downloads/. */

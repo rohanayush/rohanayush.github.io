@@ -11,7 +11,7 @@ type Manifest = {
 };
 
 // Defaults match what scripts/publish-artifacts.ps1 copies into public/downloads.
-const REL = 'https://github.com/rohanayush/release-on-my-mind-note/releases/download/mind-note';
+const REL = 'https://github.com/rohanayush/rohanayush.github.io/releases/download/mind-note';
 const FALLBACK: Manifest = {
   version: '0.1.0',
   installer: { file: `${REL}/StickyNote-Setup.exe`, size: '3.9 MB' },
