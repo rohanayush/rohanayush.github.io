@@ -1,31 +1,50 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { products } from '../../data/products';
+import NoteArt from '../../components/NoteArt.astro';
+import EyeArt from '../../components/EyeArt.astro';
 
 const base = import.meta.env.BASE_URL;
 const link = (p: (typeof products)[number]) =>
   p.href === '/' ? base : `${base}products/${p.slug}/`;
+
+// The smallest file on offer — "from 1.3 MB" on the card footer.
+const smallest = (p: (typeof products)[number]) => {
+  const sizes = p.downloads.map((d) => parseFloat(d.size ?? '')).filter((n) => !Number.isNaN(n));
+  return sizes.length ? `${Math.min(...sizes).toFixed(1)} MB` : null;
+};
 ---
 
 <Layout
   title="Products — on my mind"
-  description="Small, careful apps for Windows and Android: on my mind, Calculate what you do!, Naam Jaap and Eye Rest Reminder. Free downloads, no accounts."
+  description="Apps for Windows and Android: on my mind, Calculate what you do!, Sthir and Eye Rest Reminder. Free downloads, no accounts."
 >
   <section class="catalogue">
     <div class="container">
-      <span class="eyebrow">Everything built so far</span>
-      <h1 class="page-title">Products.</h1>
-      <p class="page-lead">
-        Small apps that do one thing properly. Nothing here needs an account, and
-        nothing here phones home — every download is free.
+      <span class="eyebrow" data-reveal>Everything built so far</span>
+      <h1 class="page-title" data-reveal="mask">Products.</h1>
+      <p class="page-lead" data-reveal>
+        Every one of these started as a problem I actually had — sore eyes, hours I
+        couldn't account for, a note that kept getting buried. Applications with some
+        soul in them, not another dashboard. Nothing here needs an account, nothing
+        phones home, and every download is free.
       </p>
 
-      <div class="cat-grid">
+      <div class="cat-grid" data-reveal-group="up">
         {products.map((p) => (
           <a class={`cat-card t-${p.tint}`} href={link(p)}>
-            {p.shots?.length ? (
+            {p.art === 'note' ? (
+              <span class="cat-shot cat-shot-art"><NoteArt /></span>
+            ) : p.art === 'eye' ? (
+              <span class="cat-shot cat-shot-art"><EyeArt /></span>
+            ) : p.shots?.length ? (
               <span class={`cat-shot shape-${p.shotShape ?? 'wide'}`}>
-                <img src={`${base}${p.shots[0].src}`} alt={p.shots[0].alt} loading="lazy" decoding="async" />
+                <img
+                  src={`${base}${p.thumb ?? p.shots[0].src}`}
+                  alt={p.shots[0].alt}
+                  loading="lazy"
+                  decoding="async"
+                />
               </span>
             ) : (
               <span class="cat-shot cat-shot-empty" aria-hidden="true">
@@ -36,8 +55,14 @@ const link = (p: (typeof products)[number]) =>
             <h2 class="cat-name">{p.name}</h2>
             {p.subtitle && <span class="cat-subtitle">{p.subtitle}</span>}
             <p class="cat-copy">{p.card}</p>
+            <span class="cat-stack">
+              {p.stack.map((tech) => <i>{tech}</i>)}
+            </span>
             <span class="cat-foot">
-              {p.slug === 'on-my-mind' ? 'The flagship' : `${p.downloads.length} download${p.downloads.length === 1 ? '' : 's'}`}
+              {p.slug === 'on-my-mind'
+                ? 'The flagship'
+                : `${p.downloads.length} download${p.downloads.length === 1 ? '' : 's'}`}
+              {smallest(p) && <em class="cat-size">from {smallest(p)}</em>}
               <i>→</i>
             </span>
           </a>
@@ -75,15 +100,15 @@ const link = (p: (typeof products)[number]) =>
     overflow: hidden; border: 1px solid var(--line); background: rgba(0,0,0,0.35);
     position: relative; z-index: 1;
   }
-  .cat-shot img { display: block; width: 100%; height: 100%; }
-  /* Wide desktop captures fill the frame from the top edge. */
-  .cat-shot.shape-wide img { object-fit: cover; object-position: top left; }
-  /* Tall phone captures sit centred and whole, on a soft backdrop. */
-  .cat-shot.shape-phone { display: grid; place-items: center; padding: 0.7rem 0; }
-  .cat-shot.shape-phone img {
-    width: auto; height: 100%; object-fit: contain; border-radius: 8px;
-    box-shadow: 0 10px 26px -12px rgba(0,0,0,0.9);
+  /* The frame is wide and short, so every capture fills it from the top —
+     a whole phone screen letterboxed in here would be a sliver. */
+  .cat-shot img {
+    display: block; width: 100%; height: 100%;
+    object-fit: cover; object-position: top center;
   }
+  .cat-shot.shape-wide img { object-position: top left; }
+  /* CSS-drawn thumbnail fills the frame edge to edge. */
+  .cat-shot-art { padding: 0; background: none; }
   .cat-shot-empty {
     display: grid; place-items: center;
     background:
@@ -102,9 +127,21 @@ const link = (p: (typeof products)[number]) =>
   .cat-name { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
   .cat-subtitle { color: var(--tint); font-size: 0.85rem; font-weight: 600; opacity: 0.9; margin-top: -0.15rem; }
   .cat-copy { color: var(--muted); line-height: 1.55; margin: 0; flex: 1; font-size: 0.95rem; }
+  /* what it's built with */
+  .cat-stack { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.9rem; }
+  .cat-stack i {
+    font-style: normal; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em;
+    color: var(--tint); padding: 0.22rem 0.5rem; border-radius: 7px;
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: inset 0 0 0 1px var(--tint-line);
+  }
   .cat-foot {
     display: inline-flex; align-items: center; gap: 0.45rem; margin-top: 0.8rem;
     font-size: 0.85rem; font-weight: 700; color: var(--ink);
+  }
+  .cat-size {
+    font-style: normal; font-weight: 600; font-size: 0.78rem; color: var(--muted);
+    padding-left: 0.55rem; margin-left: 0.1rem; border-left: 1px solid var(--line);
   }
   .cat-foot i { font-style: normal; color: var(--tint); transition: transform 0.2s ease; }
   .cat-card:hover .cat-foot i { transform: translateX(4px); }

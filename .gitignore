@@ -13,3 +13,7 @@ release/
 # env
 .env
 .env.production
+# working notes, not part of the site
+process.md
+# local tool config (holds machine-specific absolute paths)
+.claude/

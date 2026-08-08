@@ -14,7 +14,6 @@ export type Download = {
   /** Small line under the button — platform / format. */
   meta: string;
   size?: string;
-  recommended?: boolean;
   /** One-liner describing what this particular file is for. */
   note: string;
 };
@@ -31,6 +30,8 @@ export type Product = {
   /** Short line for the catalogue card. */
   card: string;
   platforms: string[];
+  /** What it's actually built with — shown as chips. */
+  stack: string[];
   /** Card + hero tint: one of the note colours. */
   tint: 'yellow' | 'pink' | 'mint' | 'blue';
   emoji: string;
@@ -38,6 +39,10 @@ export type Product = {
   shots?: { src: string; alt: string }[];
   /** How to frame the shots: tall phone captures or wide desktop ones. */
   shotShape?: 'phone' | 'wide';
+  /** Draw the catalogue thumbnail in CSS instead of using a screenshot. */
+  art?: 'note' | 'eye';
+  /** Which image fronts the catalogue card, when it isn't the first shot. */
+  thumb?: string;
   highlights: { title: string; text: string }[];
   /** Optional deep-dive on a headline feature (Sthir's Zen mode). */
   feature?: {
@@ -75,8 +80,10 @@ export const products: Product[] = [
     card: 'Fully dynamic markdown notes that float above everything on your screen.',
     body: [],
     platforms: ['Windows'],
+    stack: ['Tauri v2', 'Vue 3', 'TypeScript', 'Rust'],
     tint: 'yellow',
     emoji: '📝',
+    art: 'note',
     shotShape: 'wide',
     shots: [
       { src: 'images/note-view.webp', alt: 'A markdown travel-journal note with an image and a table' },
@@ -100,8 +107,18 @@ export const products: Product[] = [
       'One Tauri v2 + Vue 3 codebase builds both the Windows app and the Android APK, so the same tracker follows you between desk and phone.',
     ],
     platforms: ['Windows', 'Android'],
+    stack: ['Tauri v2', 'Vue 3', 'Rust', 'Android (Gradle)'],
     tint: 'mint',
     emoji: '⏱️',
+    shotShape: 'phone',
+    // The Analyse tab is the most striking frame, so it fronts the card.
+    thumb: 'images/calculate-what-you-do/analyse.webp',
+    shots: [
+      { src: 'images/calculate-what-you-do/add.webp', alt: 'The Add Task tab: one big plus, with a title field and a start time defaulting to now' },
+      { src: 'images/calculate-what-you-do/tasks.webp', alt: 'The Tasks tab with a task running, its time strip and a Stop button, and today’s finished tasks below' },
+      { src: 'images/calculate-what-you-do/completed.webp', alt: 'Finished tasks grouped by day, each day carrying its own total' },
+      { src: 'images/calculate-what-you-do/analyse.webp', alt: 'The Analyse tab: total tracked, per-active-day average, busiest day, hours per task and a day-by-day stack' },
+    ],
     highlights: [
       {
         title: 'Sync over Wi-Fi',
@@ -127,7 +144,6 @@ export const products: Product[] = [
         label: '↓ Download Setup',
         meta: 'Windows · .exe (NSIS)',
         size: '1.3 MB',
-        recommended: true,
         note: 'One-click install with a Start-menu shortcut.',
       },
       {
@@ -161,6 +177,7 @@ export const products: Product[] = [
       'It installs as an offline PWA in the browser and as a real APK on Android, where the volume keys count for you — the one thing a browser genuinely cannot do.',
     ],
     platforms: ['Android', 'Web (PWA)'],
+    stack: ['React 19', 'TypeScript', 'Vite PWA', 'Capacitor 8', 'Kotlin plugin'],
     tint: 'pink',
     emoji: '📿',
     shotShape: 'phone',
@@ -265,7 +282,6 @@ export const products: Product[] = [
         label: '↓ Download APK',
         meta: 'Android · signed .apk',
         size: '3.1 MB',
-        recommended: true,
         note: 'Release build with the native volume-key counter. Allow installs from unknown sources first.',
       },
     ],
@@ -283,8 +299,10 @@ export const products: Product[] = [
       'Built with Tauri v2 + Vue on the web side, with the timer, reset logic and notifications written natively in Kotlin.',
     ],
     platforms: ['Android'],
+    stack: ['Tauri v2', 'Vue 3', 'TypeScript', 'Kotlin service'],
     tint: 'blue',
     emoji: '👁️',
+    art: 'eye',
     highlights: [
       {
         title: 'Runs in the background',
@@ -304,10 +322,9 @@ export const products: Product[] = [
       {
         file: `${REL}/eye-rest-reminder/EyeRestReminder.apk`,
         label: '↓ Download APK',
-        meta: 'Android · .apk',
-        size: '117.6 MB',
-        recommended: true,
-        note: 'Unstripped build — large, but it installs and runs as-is. Allow installs from unknown sources first.',
+        meta: 'Android · arm64 .apk',
+        size: '6.2 MB',
+        note: 'Signed release build for 64-bit phones. Allow installs from unknown sources first.',
       },
     ],
   },

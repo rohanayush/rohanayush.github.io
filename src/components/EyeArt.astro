@@ -1,0 +1,192 @@
+---
+// A pure-CSS thumbnail for Eye Rest Reminder: an eye easing shut inside a
+// countdown ring. Drawn rather than screenshotted, because the app's own screen
+// is a status panel and reads as nothing at thumbnail size.
+//
+// `hero` scales it up and runs the loop on its own — the timer counting down and
+// the blink arriving when it completes — instead of waiting for a card hover.
+interface Props { hero?: boolean }
+const { hero = false } = Astro.props;
+---
+
+<div class:list={["eye-art", { "is-hero": hero }]} aria-hidden="true">
+  <span class="halo"></span>
+
+  <!-- countdown ring -->
+  <svg class="ring" viewBox="0 0 120 120">
+    <circle class="track" cx="60" cy="60" r="52" />
+    <circle class="progress" cx="60" cy="60" r="52" />
+  </svg>
+
+  <!-- the eye -->
+  <span class="eye">
+    <span class="iris"><i class="pupil"></i><i class="spark"></i></span>
+    <span class="lid"></span>
+  </span>
+
+  <!-- rest cue -->
+  <span class="cue">
+    <i class="bar b1"></i>
+    <i class="bar b2"></i>
+  </span>
+</div>
+
+<style>
+  .eye-art {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background:
+      radial-gradient(300px 150px at 50% 42%, rgba(143, 184, 255, 0.16), transparent 70%),
+      linear-gradient(165deg, #14151d, #0e0f14);
+  }
+  /* faint concentric rings, like a pulse going out */
+  .eye-art::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-radial-gradient(circle at 50% 45%, rgba(143, 184, 255, 0.055) 0 1px, transparent 1px 17px);
+    mask-image: radial-gradient(closest-side at 50% 45%, #000 30%, transparent 100%);
+  }
+  .halo {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 130px;
+    height: 130px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(143, 184, 255, 0.28), transparent 72%);
+    filter: blur(8px);
+  }
+
+  .ring {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 118px;
+    height: 118px;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    overflow: visible;
+  }
+  .ring circle { fill: none; stroke-width: 3.5; stroke-linecap: round; }
+  .track { stroke: rgba(255, 255, 255, 0.09); }
+  .progress {
+    stroke: var(--note-blue);
+    stroke-dasharray: 327;
+    stroke-dashoffset: 92;
+    filter: drop-shadow(0 0 6px rgba(143, 184, 255, 0.55));
+  }
+
+  .eye {
+    position: relative;
+    top: -5%;
+    width: 68px;
+    height: 40px;
+    border-radius: 50% / 50%;
+    background: linear-gradient(180deg, #f4f1e8, #cfd6e6);
+    box-shadow: inset 0 -3px 7px rgba(20, 24, 40, 0.35), 0 8px 20px -8px rgba(0, 0, 0, 0.8);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .iris {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 32%, #6f8fd0, #2f3d63 70%);
+    display: grid;
+    place-items: center;
+  }
+  .pupil { width: 11px; height: 11px; border-radius: 50%; background: #10131f; }
+  .spark {
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+  }
+  /* the lid resting halfway down — the "rest your eyes" moment */
+  .lid {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 46%;
+    background: linear-gradient(180deg, #1b1f2c, #232838);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.35);
+    border-radius: 50% 50% 12px 12px / 70% 70% 12px 12px;
+  }
+
+  .cue {
+    position: absolute;
+    left: 50%;
+    bottom: 15%;
+    transform: translateX(-50%);
+    display: grid;
+    gap: 5px;
+    justify-items: center;
+  }
+  .bar { display: block; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, 0.14); }
+  .b1 { width: 66px; }
+  .b2 { width: 40px; background: rgba(143, 184, 255, 0.4); }
+
+  /* a slow blink when the card is hovered */
+  :global(.cat-card:hover) .lid { animation: blink 2.4s ease-in-out infinite; }
+  @keyframes blink {
+    0%, 55%, 100% { height: 46%; }
+    68% { height: 100%; }
+    80% { height: 46%; }
+  }
+
+  /* ---- Hero: bigger, and it runs the whole cycle by itself ---- */
+  .is-hero { min-height: 340px; border-radius: 18px; }
+  .is-hero .halo { width: 300px; height: 300px; animation: halo-breathe 7s ease-in-out infinite; }
+  .is-hero .ring { width: 262px; height: 262px; }
+  .is-hero .ring circle { stroke-width: 2.6; }
+  /* the timer winding down, then snapping back for the next stretch */
+  .is-hero .progress { animation: countdown 7s cubic-bezier(0.4, 0, 0.5, 1) infinite; }
+  .is-hero .eye { width: 150px; height: 88px; }
+  .is-hero .iris { width: 55px; height: 55px; }
+  .is-hero .pupil { width: 24px; height: 24px; }
+  .is-hero .spark { top: 9px; left: 11px; width: 13px; height: 13px; }
+  /* the eye closes right as the countdown lands — the rest you are being nudged into */
+  .is-hero .lid { animation: rest-blink 7s ease-in-out infinite; }
+  .is-hero .cue { bottom: 12%; gap: 8px; }
+  .is-hero .b1 { width: 148px; height: 7px; }
+  .is-hero .b2 { width: 88px; height: 7px; animation: cue-pulse 7s ease-in-out infinite; }
+
+  @keyframes countdown {
+    0%   { stroke-dashoffset: 0; }
+    72%  { stroke-dashoffset: 327; }
+    73%  { stroke-dashoffset: 327; }
+    86%  { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 0; }
+  }
+  @keyframes rest-blink {
+    0%, 62%   { height: 30%; }
+    72%, 82%  { height: 100%; }
+    92%, 100% { height: 30%; }
+  }
+  @keyframes halo-breathe {
+    0%, 60%, 100% { opacity: 0.75; transform: translate(-50%, -50%) scale(1); }
+    76%           { opacity: 1;    transform: translate(-50%, -50%) scale(1.12); }
+  }
+  @keyframes cue-pulse {
+    0%, 62%, 100% { opacity: 0.5; }
+    76%           { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.cat-card:hover) .lid,
+    .is-hero .lid,
+    .is-hero .progress,
+    .is-hero .halo,
+    .is-hero .b2 { animation: none; }
+  }
+</style>

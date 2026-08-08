@@ -7,6 +7,7 @@
 // the All products page, which the URL alone can't tell us. The choice is
 // remembered for the session only, so a fresh visit starts at on my mind.
 import { products } from '../data/products';
+import { profile } from '../data/profile';
 
 const { pathname } = Astro.url;
 const base = import.meta.env.BASE_URL;
@@ -33,7 +34,10 @@ const navProducts = products.map((p) => ({ slug: p.slug, name: p.name, href: hre
   <div class="container nav-inner">
     <a href={base} class="brand">
       <span class="brand-dot"></span>
-      on&nbsp;my&nbsp;mind
+      <span class="brand-text">
+        <strong>{profile.name.replace(' Singh', '')}</strong>
+        <em>products first</em>
+      </span>
     </a>
 
     <nav class="nav-links">
@@ -45,12 +49,12 @@ const navProducts = products.map((p) => ({ slug: p.slug, name: p.name, href: hre
       <a href={`${base}products/`} class:list={["nav-link", { active: onCatalogue }]}>
         All products
       </a>
-      <span class="nav-link disabled" aria-disabled="true" title="Coming soon">
-        About <em>soon</em>
-      </span>
-      <span class="nav-link disabled" aria-disabled="true" title="Coming soon">
-        Contact <em>soon</em>
-      </span>
+      <a href={`${base}about/`} class:list={["nav-link", { active: isActive(`${base}about/`) }]}>
+        About
+      </a>
+      <a href={`${base}contact/`} class:list={["nav-link", { active: isActive(`${base}contact/`) }]}>
+        Contact
+      </a>
     </nav>
   </div>
 </header>
@@ -98,10 +102,24 @@ const navProducts = products.map((p) => ({ slug: p.slug, name: p.name, href: hre
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
+  }
+  .brand-text { display: grid; gap: 0.05rem; line-height: 1.1; }
+  .brand-text strong {
     font-weight: 800;
     letter-spacing: -0.02em;
     font-size: 1.05rem;
   }
+  /* the hint: what this site leads with */
+  .brand-text em {
+    font-style: normal;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    opacity: 0.75;
+  }
+  .brand:hover .brand-text em { opacity: 1; }
   .brand-dot {
     width: 12px; height: 12px; border-radius: 4px;
     background: var(--note-yellow);
@@ -136,6 +154,6 @@ const navProducts = products.map((p) => ({ slug: p.slug, name: p.name, href: hre
     background: rgba(255,255,255,0.06);
   }
   @media (max-width: 560px) {
-    .nav-link.disabled em { display: none; }
+    .brand-text em { display: none; }
   }
 </style>

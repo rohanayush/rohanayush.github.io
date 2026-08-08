@@ -1,0 +1,169 @@
+---
+// A pure-CSS stand-in for an on my mind screenshot: two pinned notes floating
+// over a dark desk, one rendering markdown. No image asset, so it stays crisp
+// at any size and matches the tone of the other product thumbnails.
+---
+
+<div class="note-art" aria-hidden="true">
+  <span class="glow"></span>
+
+  <!-- the note peeking out behind -->
+  <div class="card back">
+    <span class="bar">
+      <i class="dot"></i><i class="dot"></i><i class="dot"></i>
+    </span>
+    <span class="line w80"></span>
+    <span class="line w55"></span>
+    <span class="line w70"></span>
+    <span class="line w40"></span>
+  </div>
+
+  <!-- the note in front, rendering markdown -->
+  <div class="card front">
+    <span class="pin"></span>
+    <span class="bar">
+      <i class="dot d1"></i><i class="dot d2"></i><i class="dot d3"></i>
+      <i class="grow"></i>
+      <i class="tick"></i>
+    </span>
+    <span class="h"># Travel Journal</span>
+    <span class="line w85"></span>
+    <span class="line w60"></span>
+    <span class="code">
+      <i class="c w50"></i>
+      <i class="c w70"></i>
+    </span>
+    <span class="task"><i class="box"></i><i class="line w45"></i></span>
+  </div>
+</div>
+
+<style>
+  .note-art {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background:
+      radial-gradient(340px 150px at 72% 8%, rgba(255, 225, 107, 0.14), transparent 68%),
+      radial-gradient(300px 160px at 12% 96%, rgba(143, 184, 255, 0.12), transparent 66%),
+      linear-gradient(160deg, #17151f, #0f0e14);
+  }
+  /* faint desk grid */
+  .note-art::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: radial-gradient(120% 90% at 50% 40%, #000 40%, transparent 100%);
+  }
+  .glow {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    width: 74%;
+    height: 62%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(closest-side, rgba(255, 214, 77, 0.2), transparent 75%);
+    filter: blur(10px);
+  }
+
+  .card {
+    position: absolute;
+    border-radius: 9px;
+    padding: 9px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    box-shadow: 0 18px 34px -14px rgba(0, 0, 0, 0.85);
+  }
+
+  .back {
+    right: 7%;
+    top: 15%;
+    width: 41%;
+    height: 62%;
+    transform: rotate(7deg);
+    background: linear-gradient(158deg, #8fb8ff, #6f9ce8);
+    opacity: 0.9;
+  }
+
+  .front {
+    left: 8%;
+    top: 12%;
+    width: 58%;
+    transform: rotate(-3deg);
+    background: linear-gradient(158deg, var(--note-yellow), #f2c33f);
+  }
+
+  .pin {
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    width: 3px;
+    height: 13px;
+    border-radius: 2px;
+    background: #c0392b;
+    transform: translateX(-50%) rotate(9deg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+  }
+
+  .bar { display: flex; align-items: center; gap: 3px; margin-bottom: 2px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(0, 0, 0, 0.22); }
+  .d1 { background: #e8534f; }
+  .d2 { background: #f2b134; }
+  .d3 { background: #57c46a; }
+  .grow { flex: 1; }
+  .tick { width: 10px; height: 3px; border-radius: 2px; background: rgba(0, 0, 0, 0.25); }
+
+  /* the markdown heading, as real type */
+  .h {
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+    font-size: 9px;
+    font-weight: 800;
+    color: #1a1606;
+    letter-spacing: -0.01em;
+    margin-bottom: 1px;
+  }
+
+  .line { height: 4px; border-radius: 3px; background: rgba(0, 0, 0, 0.16); }
+  .w40 { width: 40%; }
+  .w45 { width: 45%; }
+  .w50 { width: 50%; }
+  .w55 { width: 55%; }
+  .w60 { width: 60%; }
+  .w70 { width: 70%; }
+  .w80 { width: 80%; }
+  .w85 { width: 85%; }
+
+  .code {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 6px 7px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+  .c { height: 3px; border-radius: 2px; background: rgba(0, 0, 0, 0.3); }
+
+  .task { display: flex; align-items: center; gap: 5px; }
+  .box {
+    width: 7px;
+    height: 7px;
+    flex: none;
+    border-radius: 2px;
+    border: 1.5px solid rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  /* the front note lifts a touch when its card is hovered */
+  :global(.cat-card:hover) .front { transform: rotate(-2deg) translateY(-4px); }
+  :global(.cat-card:hover) .back { transform: rotate(9deg) translateY(-2px); }
+  .front, .back { transition: transform 0.35s cubic-bezier(0.34, 1.3, 0.64, 1); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .front, .back { transition: none; }
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { products, otherProducts } from '../../data/products';
+import EyeArt from '../../components/EyeArt.astro';
 
 // The flagship keeps the home page as its landing page, so it gets no
 // generated detail page here.
@@ -13,6 +14,16 @@ export function getStaticPaths() {
 const { product } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const others = otherProducts.filter((p) => p.slug !== product.slug);
+
+// "6.2 MB", or "1.3 – 20.7 MB" when the downloads differ in size.
+const sizes = product.downloads
+  .map((d) => parseFloat(d.size ?? ''))
+  .filter((n) => !Number.isNaN(n));
+const downloadSize = sizes.length
+  ? sizes.length === 1 || Math.min(...sizes) === Math.max(...sizes)
+    ? `${sizes[0].toFixed(1)} MB`
+    : `${Math.min(...sizes).toFixed(1)} – ${Math.max(...sizes).toFixed(1)} MB`
+  : null;
 ---
 
 <Layout
@@ -20,27 +31,43 @@ const others = otherProducts.filter((p) => p.slug !== product.slug);
   description={product.card}
 >
   <section class={`p-hero t-${product.tint}`}>
-    <div class="container">
-      <a class="crumb" href={`${base}products/`}>← All products</a>
-      <span class="p-emoji">{product.emoji}</span>
-      <span class="eyebrow p-eyebrow">{product.eyebrow}</span>
-      <h1 class="p-title">{product.name}</h1>
-      {product.subtitle && <p class="p-subtitle">{product.subtitle}</p>}
-      <p class="p-tagline">{product.tagline}</p>
-      <div class="p-cta">
-        <a class="btn btn-primary" href="#get">↓ Get it free</a>
-        <span class="p-platforms">{product.platforms.join(' · ')}</span>
+    <div class:list={["container", { "hero-split": product.art }]}>
+      <div class="hero-copy">
+        <a class="crumb" data-reveal href={`${base}products/`}>← All products</a>
+        <span class="p-emoji" data-reveal>{product.emoji}</span>
+        <span class="eyebrow p-eyebrow" data-reveal>{product.eyebrow}</span>
+        <h1 class="p-title" data-reveal="mask">{product.name}</h1>
+        {product.subtitle && <p class="p-subtitle" data-reveal>{product.subtitle}</p>}
+        <p class="p-tagline" data-reveal>{product.tagline}</p>
+        <div class="p-stack" data-reveal>
+          <span class="p-stack-label">Built with</span>
+          {product.stack.map((tech) => <span class="p-chip">{tech}</span>)}
+        </div>
+        <div class="p-cta" data-reveal>
+          <a class="btn btn-primary" href="#get">↓ Get it free</a>
+          <span class="p-platforms">{product.platforms.join(' · ')}</span>
+        </div>
       </div>
+
+      {/* No screenshot worth showing, so the drawn art carries the hero. */}
+      {product.art === 'eye' && (
+        <figure class="hero-art" data-reveal="right">
+          <EyeArt hero />
+          <figcaption>Counting screen-on time · rest at the end of the ring</figcaption>
+        </figure>
+      )}
     </div>
   </section>
 
   <section class="p-body">
     <div class="container body-grid">
-      <div class="body-copy">
+      <div class="body-copy" data-reveal>
         {product.body.map((para) => <p>{para}</p>)}
       </div>
-      <ul class="body-facts">
+      <ul class="body-facts" data-reveal="right">
         <li><span>Platforms</span><strong>{product.platforms.join(', ')}</strong></li>
+        <li><span>Built with</span><strong>{product.stack.join(' · ')}</strong></li>
+        {downloadSize && <li><span>Download size</span><strong>{downloadSize}</strong></li>}
         <li><span>Price</span><strong>Free</strong></li>
         <li><span>Account</span><strong>Not required</strong></li>
         <li><span>Your data</span><strong>Stays on device</strong></li>
@@ -51,9 +78,9 @@ const others = otherProducts.filter((p) => p.slug !== product.slug);
   {product.shots?.length && (
     <section class={`p-shots t-${product.tint}`}>
       <div class="container">
-        <span class="eyebrow">A look at it</span>
-        <h2 class="section-title">Screenshots.</h2>
-        <div class={`shot-strip shape-${product.shotShape ?? 'wide'}`}>
+        <span class="eyebrow" data-reveal>A look at it</span>
+        <h2 class="section-title" data-reveal="mask">Screenshots.</h2>
+        <div data-reveal-group="up" class={`shot-strip shape-${product.shotShape ?? 'wide'}`}>
           {product.shots.map((s) => (
             <figure class="shot">
               <img src={`${base}${s.src}`} alt={s.alt} loading="lazy" decoding="async" />
@@ -67,11 +94,11 @@ const others = otherProducts.filter((p) => p.slug !== product.slug);
   {product.feature && (
     <section class={`p-feature t-${product.tint}`}>
       <div class="container">
-        <span class="eyebrow">{product.feature.eyebrow}</span>
-        <h2 class="section-title">{product.feature.title}</h2>
-        <p class="feature-lead">{product.feature.lead}</p>
+        <span class="eyebrow" data-reveal>{product.feature.eyebrow}</span>
+        <h2 class="section-title" data-reveal="mask">{product.feature.title}</h2>
+        <p class="feature-lead" data-reveal>{product.feature.lead}</p>
 
-        <div class="feature-shots">
+        <div class="feature-shots" data-reveal-group="up">
           {product.feature.shots.map((s) => (
             <figure class="shot">
               <img src={`${base}${s.src}`} alt={s.alt} loading="lazy" decoding="async" />
@@ -79,7 +106,7 @@ const others = otherProducts.filter((p) => p.slug !== product.slug);
           ))}
         </div>
 
-        <div class="pattern-grid">
+        <div class="pattern-grid" data-reveal-group="up">
           {product.feature.patterns.map((p) => (
             <article class="pattern">
               <header class="pattern-head">
@@ -97,16 +124,16 @@ const others = otherProducts.filter((p) => p.slug !== product.slug);
           ))}
         </div>
 
-        {product.feature.note && <p class="feature-note">{product.feature.note}</p>}
+        {product.feature.note && <p class="feature-note" data-reveal>{product.feature.note}</p>}
       </div>
     </section>
   )}
 
   <section class={`p-highlights t-${product.tint}`}>
     <div class="container">
-      <span class="eyebrow">What makes it good</span>
-      <h2 class="section-title">The parts worth knowing.</h2>
-      <div class="hl-grid">
+      <span class="eyebrow" data-reveal>What makes it good</span>
+      <h2 class="section-title" data-reveal="mask">The parts worth knowing.</h2>
+      <div class="hl-grid" data-reveal-group="up">
         {product.highlights.map((h) => (
           <article class="hl-card">
             <h3>{h.title}</h3>
@@ -119,17 +146,19 @@ const others = otherProducts.filter((p) => p.slug !== product.slug);
 
   <section id="get" class="p-download">
     <div class="container">
-      <span class="eyebrow">Get it free</span>
-      <h2 class="section-title">Download {product.name}.</h2>
-      <p class="section-lead">No account, no cost. Pick the file for your device.</p>
+      <span class="eyebrow" data-reveal>Get it free</span>
+      <h2 class="section-title" data-reveal="mask">Download {product.name}.</h2>
+      <p class="section-lead" data-reveal>
+        No account, no cost. Pick the file for your device —
+        {downloadSize ? ` every download here is ${downloadSize}.` : ' they are all small.'}
+      </p>
 
-      <div class="dl-grid">
+      <div class="dl-grid" data-reveal-group="up">
         {product.downloads.map((d) => (
-          <div class={`dl-tile${d.recommended ? ' recommended' : ''}`}>
-            {d.recommended && <span class="dl-badge">Recommended</span>}
+          <div class="dl-tile">
             <h3>{d.meta.split(' · ')[0]}</h3>
             <p>{d.note}</p>
-            <a class={`btn ${d.recommended ? 'btn-primary' : 'btn-ghost'}`} href={d.file} download>
+            <a class="btn btn-primary" href={d.file} download>
               {d.label}{d.size ? ` · ${d.size}` : ''}
             </a>
             <small>{d.meta}</small>
@@ -137,7 +166,7 @@ const others = otherProducts.filter((p) => p.slug !== product.slug);
         ))}
       </div>
 
-      <p class="dl-note">
+      <p class="dl-note" data-reveal>
         Unsigned builds — Windows SmartScreen may warn (<em>More info → Run anyway</em>),
         and Android will ask you to allow installs from this source.
       </p>
@@ -146,9 +175,9 @@ const others = otherProducts.filter((p) => p.slug !== product.slug);
 
   <section class="p-more">
     <div class="container">
-      <span class="eyebrow">Also built</span>
-      <h2 class="section-title">More products.</h2>
-      <div class="more-grid">
+      <span class="eyebrow" data-reveal>Also built</span>
+      <h2 class="section-title" data-reveal="mask">More products.</h2>
+      <div class="more-grid" data-reveal-group="up">
         <a class="more-card t-yellow" href={base}>
           <span class="more-emoji">📝</span>
           <strong>on my mind</strong>
@@ -181,6 +210,21 @@ const others = otherProducts.filter((p) => p.slug !== product.slug);
     content: ''; position: absolute; inset: 0; pointer-events: none;
     background: radial-gradient(900px 400px at 15% 0%, var(--tint-glow), transparent 65%);
   }
+  /* Two columns only when there's art to sit beside the copy. */
+  .hero-split { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3rem; align-items: center; }
+  .hero-art {
+    position: relative; margin: 0;
+    border-radius: 18px; overflow: hidden;
+    box-shadow: inset 0 0 0 1px var(--line), 0 40px 70px -40px #000;
+  }
+  .hero-art figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 0.6rem 0.9rem; text-align: center;
+    font-size: 0.76rem; font-weight: 600; letter-spacing: 0.02em;
+    color: var(--muted);
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+  }
+
   .crumb { color: var(--muted); font-size: 0.9rem; font-weight: 600; }
   .crumb:hover { color: var(--ink); }
   .p-emoji { display: block; font-size: 2.6rem; margin: 1.6rem 0 0.8rem; }
@@ -191,6 +235,19 @@ const others = otherProducts.filter((p) => p.slug !== product.slug);
     letter-spacing: 0.02em; opacity: 0.9;
   }
   .p-tagline { color: var(--muted); font-size: 1.18rem; max-width: 46ch; margin: 0; line-height: 1.5; }
+  /* Built with — the stack, up front in the hero. */
+  .p-stack { display: flex; align-items: center; gap: 0.45rem; margin-top: 1.6rem; flex-wrap: wrap; }
+  .p-stack-label {
+    text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.66rem;
+    font-weight: 800; color: var(--muted); margin-right: 0.25rem;
+  }
+  .p-chip {
+    font-size: 0.78rem; font-weight: 700; color: var(--tint);
+    padding: 0.3rem 0.6rem; border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: inset 0 0 0 1px var(--tint-line);
+  }
+
   .p-cta { display: flex; align-items: center; gap: 1.2rem; margin-top: 2rem; flex-wrap: wrap; }
   .p-platforms { color: var(--muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -281,16 +338,10 @@ const others = otherProducts.filter((p) => p.slug !== product.slug);
     position: relative; background: var(--bg-soft); border: 1px solid var(--line);
     border-radius: var(--radius); padding: 1.6rem; display: flex; flex-direction: column; gap: 0.6rem;
   }
-  .dl-tile.recommended { border-color: rgba(255, 214, 77, 0.5); box-shadow: 0 0 0 1px rgba(255,214,77,0.15); }
   .dl-tile h3 { font-size: 1.2rem; }
   .dl-tile p { color: var(--muted); font-size: 0.92rem; margin: 0; flex: 1; line-height: 1.5; }
   .dl-tile .btn { margin-top: 0.4rem; justify-content: center; }
   .dl-tile small { color: var(--muted); font-size: 0.78rem; }
-  .dl-badge {
-    position: absolute; top: -10px; right: 14px; background: var(--accent); color: #1a1606;
-    font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
-    padding: 0.25rem 0.6rem; border-radius: 999px;
-  }
   .dl-note { color: var(--muted); font-size: 0.84rem; margin-top: 1.4rem; }
   .dl-note em { font-style: italic; color: var(--ink); }
 
@@ -308,6 +359,7 @@ const others = otherProducts.filter((p) => p.slug !== product.slug);
   .more-card span:last-child { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
 
   @media (max-width: 900px) {
+    .hero-split { grid-template-columns: 1fr; gap: 2rem; }
     .body-grid { grid-template-columns: 1fr; gap: 1.8rem; }
     .hl-grid, .dl-grid, .more-grid, .pattern-grid { grid-template-columns: 1fr; }
     .feature-shots { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.7rem; }
