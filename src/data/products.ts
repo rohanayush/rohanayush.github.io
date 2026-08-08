@@ -156,9 +156,9 @@ export const products: Product[] = [
       {
         file: `${REL}/calculate-what-you-do/CalculateWhatYouDo.apk`,
         label: '↓ Download APK',
-        meta: 'Android · universal .apk',
-        size: '20.7 MB',
-        note: 'Signed release build. Allow installs from unknown sources first.',
+        meta: 'Android · arm64 .apk',
+        size: '7.2 MB',
+        note: 'Signed release build for 64-bit phones. Allow installs from unknown sources first.',
       },
     ],
   },
