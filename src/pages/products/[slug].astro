@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { products, otherProducts } from '../../data/products';
 import EyeArt from '../../components/EyeArt.astro';
+import OverlayGuide from '../../components/OverlayGuide.astro';
 import { profile } from '../../data/profile';
 
 // The flagship keeps the home page as its landing page, so it gets no
@@ -59,6 +60,20 @@ const downloadSize = sizes.length
       )}
     </div>
   </section>
+
+  {product.art === 'eye' && (
+    <section class={`p-setup t-${product.tint}`}>
+      <div class="container">
+        <span class="eyebrow" data-reveal>Before it can work</span>
+        <h2 class="section-title" data-reveal="mask">Allow “Display over other apps”.</h2>
+        <p class="section-lead" data-reveal>
+          Android keeps this one behind a menu almost nobody opens, and the reminder
+          cannot appear without it. It takes about fifteen seconds.
+        </p>
+        <div data-reveal="scale"><OverlayGuide /></div>
+      </div>
+    </section>
+  )}
 
   <section class="p-body">
     <div class="container body-grid">
