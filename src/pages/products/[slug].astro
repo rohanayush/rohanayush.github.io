@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { products, otherProducts } from '../../data/products';
 import EyeArt from '../../components/EyeArt.astro';
+import { profile } from '../../data/profile';
 
 // The flagship keeps the home page as its landing page, so it gets no
 // generated detail page here.
@@ -27,7 +28,7 @@ const downloadSize = sizes.length
 ---
 
 <Layout
-  title={`${product.name} — on my mind`}
+  title={`${product.name} — ${profile.name}`}
   description={product.card}
 >
   <section class={`p-hero t-${product.tint}`}>

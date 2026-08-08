@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import { products } from '../../data/products';
 import NoteArt from '../../components/NoteArt.astro';
 import EyeArt from '../../components/EyeArt.astro';
+import { profile } from '../../data/profile';
 
 const base = import.meta.env.BASE_URL;
 const link = (p: (typeof products)[number]) =>
@@ -16,7 +17,7 @@ const smallest = (p: (typeof products)[number]) => {
 ---
 
 <Layout
-  title="Products — on my mind"
+  title={`Products — ${profile.name}`}
   description="Apps for Windows and Android: on my mind, Calculate what you do!, Sthir and Eye Rest Reminder. Free downloads, no accounts."
 >
   <section class="catalogue">
