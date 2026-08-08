@@ -7,6 +7,7 @@ node_modules/
 # release artifacts (large binaries — host them on GitHub Releases instead)
 public/downloads/*.exe
 public/downloads/*.msi
+public/downloads/*.apk
 # staging folder for built installers to upload to the GitHub release tag
 release/
 # env

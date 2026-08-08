@@ -1,9 +1,32 @@
 ---
-// Top navigation. Products is live; About & Contact are disabled
-// placeholders for when this site grows into a full portfolio.
+// Top navigation. About & Contact are disabled placeholders for when this
+// site grows into a full portfolio.
+//
+// The first link is whichever product you last opened. It starts as the
+// flagship, becomes the app you pick, and stays on that app — including on
+// the All products page, which the URL alone can't tell us. The choice is
+// remembered for the session only, so a fresh visit starts at on my mind.
+import { products } from '../data/products';
+
 const { pathname } = Astro.url;
 const base = import.meta.env.BASE_URL;
 const isActive = (href: string) => pathname === href || pathname === href + '/';
+
+const hrefFor = (p: (typeof products)[number]) =>
+  p.href === '/' ? base : `${base}products/${p.slug}/`;
+
+const onCatalogue = isActive(`${base}products/`);
+const flagship = products.find((p) => p.slug === 'on-my-mind')!;
+// The product whose own page we're on, if any — home counts as the flagship's.
+const selected = isActive(base)
+  ? flagship
+  : products.find((p) => isActive(`${base}products/${p.slug}/`));
+
+const current = selected ?? flagship;
+const currentActive = Boolean(selected);
+
+// Handed to the inline script so it can swap the label without a fetch.
+const navProducts = products.map((p) => ({ slug: p.slug, name: p.name, href: hrefFor(p) }));
 ---
 
 <header class="nav">
@@ -14,7 +37,14 @@ const isActive = (href: string) => pathname === href || pathname === href + '/';
     </a>
 
     <nav class="nav-links">
-      <a href={base} class:list={["nav-link", { active: isActive(base) }]}>Products</a>
+      <a
+        id="nav-current"
+        href={hrefFor(current)}
+        class:list={["nav-link", { active: currentActive }]}
+      >{current.name}</a>
+      <a href={`${base}products/`} class:list={["nav-link", { active: onCatalogue }]}>
+        All products
+      </a>
       <span class="nav-link disabled" aria-disabled="true" title="Coming soon">
         About <em>soon</em>
       </span>
@@ -24,6 +54,30 @@ const isActive = (href: string) => pathname === href || pathname === href + '/';
     </nav>
   </div>
 </header>
+
+<script is:inline define:vars={{ navProducts, selectedSlug: selected?.slug ?? null }}>
+  // Landing on a product's own page records it; every other page just shows
+  // whatever was recorded last. sessionStorage, so it resets on a fresh visit.
+  (function () {
+    const KEY = 'omm:last-product';
+    try {
+      if (selectedSlug) {
+        sessionStorage.setItem(KEY, selectedSlug);
+        return;
+      }
+      const saved = sessionStorage.getItem(KEY);
+      if (!saved) return;
+      const hit = navProducts.find((p) => p.slug === saved);
+      const link = document.getElementById('nav-current');
+      if (hit && link) {
+        link.textContent = hit.name;
+        link.href = hit.href;
+      }
+    } catch (e) {
+      // Storage blocked (private mode / cookies off) — the default label stands.
+    }
+  })();
+</script>
 
 <style>
   .nav {

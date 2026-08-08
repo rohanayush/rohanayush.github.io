@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "publish:artifacts": "pwsh scripts/publish-artifacts.ps1",
+    "stage:products": "pwsh scripts/stage-product-artifacts.ps1",
     "release": "pwsh scripts/publish-artifacts.ps1 && astro build"  
   },
   "dependencies": {

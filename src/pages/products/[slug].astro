@@ -1,0 +1,315 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { products, otherProducts } from '../../data/products';
+
+// The flagship keeps the home page as its landing page, so it gets no
+// generated detail page here.
+export function getStaticPaths() {
+  return products
+    .filter((p) => !p.href)
+    .map((p) => ({ params: { slug: p.slug }, props: { product: p } }));
+}
+
+const { product } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const others = otherProducts.filter((p) => p.slug !== product.slug);
+---
+
+<Layout
+  title={`${product.name} — on my mind`}
+  description={product.card}
+>
+  <section class={`p-hero t-${product.tint}`}>
+    <div class="container">
+      <a class="crumb" href={`${base}products/`}>← All products</a>
+      <span class="p-emoji">{product.emoji}</span>
+      <span class="eyebrow p-eyebrow">{product.eyebrow}</span>
+      <h1 class="p-title">{product.name}</h1>
+      {product.subtitle && <p class="p-subtitle">{product.subtitle}</p>}
+      <p class="p-tagline">{product.tagline}</p>
+      <div class="p-cta">
+        <a class="btn btn-primary" href="#get">↓ Get it free</a>
+        <span class="p-platforms">{product.platforms.join(' · ')}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="p-body">
+    <div class="container body-grid">
+      <div class="body-copy">
+        {product.body.map((para) => <p>{para}</p>)}
+      </div>
+      <ul class="body-facts">
+        <li><span>Platforms</span><strong>{product.platforms.join(', ')}</strong></li>
+        <li><span>Price</span><strong>Free</strong></li>
+        <li><span>Account</span><strong>Not required</strong></li>
+        <li><span>Your data</span><strong>Stays on device</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  {product.shots?.length && (
+    <section class={`p-shots t-${product.tint}`}>
+      <div class="container">
+        <span class="eyebrow">A look at it</span>
+        <h2 class="section-title">Screenshots.</h2>
+        <div class={`shot-strip shape-${product.shotShape ?? 'wide'}`}>
+          {product.shots.map((s) => (
+            <figure class="shot">
+              <img src={`${base}${s.src}`} alt={s.alt} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {product.feature && (
+    <section class={`p-feature t-${product.tint}`}>
+      <div class="container">
+        <span class="eyebrow">{product.feature.eyebrow}</span>
+        <h2 class="section-title">{product.feature.title}</h2>
+        <p class="feature-lead">{product.feature.lead}</p>
+
+        <div class="feature-shots">
+          {product.feature.shots.map((s) => (
+            <figure class="shot">
+              <img src={`${base}${s.src}`} alt={s.alt} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+
+        <div class="pattern-grid">
+          {product.feature.patterns.map((p) => (
+            <article class="pattern">
+              <header class="pattern-head">
+                <h3>{p.name}</h3>
+                <span class="pattern-rhythm">{p.rhythm}</span>
+              </header>
+              <p class="pattern-phases">{p.phases}</p>
+              <p class="pattern-hint">“{p.hint}”</p>
+              <p class="pattern-text">{p.text}</p>
+              <p class="pattern-benefits-label">Good for</p>
+              <ul class="pattern-benefits">
+                {p.benefits.map((b) => <li>{b}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+
+        {product.feature.note && <p class="feature-note">{product.feature.note}</p>}
+      </div>
+    </section>
+  )}
+
+  <section class={`p-highlights t-${product.tint}`}>
+    <div class="container">
+      <span class="eyebrow">What makes it good</span>
+      <h2 class="section-title">The parts worth knowing.</h2>
+      <div class="hl-grid">
+        {product.highlights.map((h) => (
+          <article class="hl-card">
+            <h3>{h.title}</h3>
+            <p>{h.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="get" class="p-download">
+    <div class="container">
+      <span class="eyebrow">Get it free</span>
+      <h2 class="section-title">Download {product.name}.</h2>
+      <p class="section-lead">No account, no cost. Pick the file for your device.</p>
+
+      <div class="dl-grid">
+        {product.downloads.map((d) => (
+          <div class={`dl-tile${d.recommended ? ' recommended' : ''}`}>
+            {d.recommended && <span class="dl-badge">Recommended</span>}
+            <h3>{d.meta.split(' · ')[0]}</h3>
+            <p>{d.note}</p>
+            <a class={`btn ${d.recommended ? 'btn-primary' : 'btn-ghost'}`} href={d.file} download>
+              {d.label}{d.size ? ` · ${d.size}` : ''}
+            </a>
+            <small>{d.meta}</small>
+          </div>
+        ))}
+      </div>
+
+      <p class="dl-note">
+        Unsigned builds — Windows SmartScreen may warn (<em>More info → Run anyway</em>),
+        and Android will ask you to allow installs from this source.
+      </p>
+    </div>
+  </section>
+
+  <section class="p-more">
+    <div class="container">
+      <span class="eyebrow">Also built</span>
+      <h2 class="section-title">More products.</h2>
+      <div class="more-grid">
+        <a class="more-card t-yellow" href={base}>
+          <span class="more-emoji">📝</span>
+          <strong>on my mind</strong>
+          <span>Markdown notes that float above every app.</span>
+        </a>
+        {others.map((p) => (
+          <a class={`more-card t-${p.tint}`} href={`${base}products/${p.slug}/`}>
+            <span class="more-emoji">{p.emoji}</span>
+            <strong>{p.name}</strong>
+            <span>{p.card}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -0.02em; margin-top: 0.4rem; }
+  .section-lead { color: var(--muted); max-width: 48ch; margin: 0.8rem 0 2.6rem; font-size: 1.05rem; }
+
+  .t-yellow { --tint: var(--note-yellow); --tint-glow: rgba(255,225,107,0.16); --tint-line: rgba(255,225,107,0.45); }
+  .t-pink   { --tint: var(--note-pink);   --tint-glow: rgba(255,143,177,0.16); --tint-line: rgba(255,143,177,0.45); }
+  .t-mint   { --tint: var(--note-mint);   --tint-glow: rgba(143,240,197,0.16); --tint-line: rgba(143,240,197,0.45); }
+  .t-blue   { --tint: var(--note-blue);   --tint-glow: rgba(143,184,255,0.16); --tint-line: rgba(143,184,255,0.45); }
+
+  /* ---- Hero ---- */
+  .p-hero { padding-bottom: 3rem; position: relative; }
+  .p-hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(900px 400px at 15% 0%, var(--tint-glow), transparent 65%);
+  }
+  .crumb { color: var(--muted); font-size: 0.9rem; font-weight: 600; }
+  .crumb:hover { color: var(--ink); }
+  .p-emoji { display: block; font-size: 2.6rem; margin: 1.6rem 0 0.8rem; }
+  .p-eyebrow { color: var(--tint); }
+  .p-title { font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 800; letter-spacing: -0.03em; margin: 0.5rem 0 0.4rem; }
+  .p-subtitle {
+    color: var(--tint); font-size: 1rem; font-weight: 600; margin: 0 0 0.9rem;
+    letter-spacing: 0.02em; opacity: 0.9;
+  }
+  .p-tagline { color: var(--muted); font-size: 1.18rem; max-width: 46ch; margin: 0; line-height: 1.5; }
+  .p-cta { display: flex; align-items: center; gap: 1.2rem; margin-top: 2rem; flex-wrap: wrap; }
+  .p-platforms { color: var(--muted); font-size: 0.9rem; font-weight: 600; }
+
+  /* ---- Body ---- */
+  .p-body { padding-top: 2rem; }
+  .body-grid { display: grid; grid-template-columns: 1.35fr 0.65fr; gap: 3rem; align-items: start; }
+  .body-copy p { color: var(--ink); font-size: 1.08rem; line-height: 1.65; margin: 0 0 1.3rem; }
+  .body-copy p:last-child { margin-bottom: 0; }
+  .body-facts {
+    list-style: none; padding: 1.4rem; margin: 0; display: grid; gap: 0.9rem;
+    background: var(--bg-soft); border: 1px solid var(--line); border-radius: 16px;
+  }
+  .body-facts li { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.9rem; }
+  .body-facts span { color: var(--muted); }
+  .body-facts strong { font-weight: 700; text-align: right; }
+
+  /* ---- Screenshots ---- */
+  .p-shots { padding-bottom: 0; }
+  .shot-strip { display: grid; gap: 1.2rem; margin-top: 0.4rem; }
+  /* Phone captures: a row of upright frames that scrolls on small screens. */
+  .shot-strip.shape-phone { grid-auto-flow: column; grid-auto-columns: minmax(190px, 1fr); overflow-x: auto; padding-bottom: 0.6rem; }
+  .shot-strip.shape-wide { grid-template-columns: repeat(2, 1fr); }
+  .shot {
+    margin: 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--line);
+    background: rgba(0,0,0,0.35); box-shadow: 0 30px 60px -34px rgba(0,0,0,0.95);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .shot:hover { transform: translateY(-4px); border-color: var(--tint-line); }
+  .shot img { display: block; width: 100%; height: auto; }
+  .shape-wide .shot:first-child { grid-column: 1 / -1; }
+
+  /* ---- Feature deep-dive (Zen mode) ---- */
+  .p-feature { padding-bottom: 0; }
+  .feature-lead { color: var(--muted); max-width: 68ch; font-size: 1.05rem; line-height: 1.65; margin: 0.8rem 0 2.4rem; }
+  .feature-shots {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 260px)); gap: 1.2rem;
+    justify-content: start; margin-bottom: 2.6rem;
+  }
+  .pattern-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
+  .pattern {
+    background: var(--bg-soft); border: 1px solid var(--line); border-radius: 16px; padding: 1.5rem;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .pattern:hover { border-color: var(--tint-line); transform: translateY(-3px); }
+  .pattern-head { display: flex; align-items: baseline; gap: 0.8rem; }
+  .pattern-head h3 { font-size: 1.15rem; font-weight: 800; }
+  .pattern-rhythm {
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace; font-size: 0.9rem;
+    font-weight: 700; color: var(--tint); letter-spacing: 0.04em;
+  }
+  .pattern-phases {
+    color: var(--ink); font-size: 0.86rem; margin: 0.6rem 0 0; opacity: 0.75;
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  }
+  .pattern-hint { color: var(--tint); font-style: italic; font-size: 0.92rem; margin: 0.7rem 0 0.5rem; }
+  .pattern-text { color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin: 0; }
+  .pattern-benefits-label {
+    text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.66rem; font-weight: 700;
+    color: var(--tint); margin: 1.1rem 0 0.5rem;
+  }
+  .pattern-benefits { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.45rem; }
+  .pattern-benefits li {
+    position: relative; padding-left: 1.4rem; color: var(--ink);
+    font-size: 0.88rem; line-height: 1.5; opacity: 0.85;
+  }
+  .pattern-benefits li::before {
+    content: ''; position: absolute; left: 0; top: 0.6em; width: 0.7rem; height: 2px;
+    border-radius: 2px; background: var(--tint); opacity: 0.8;
+  }
+  .feature-note {
+    color: var(--muted); font-size: 0.84rem; line-height: 1.6; margin: 1.6rem 0 0;
+    max-width: 78ch; padding-left: 0.9rem; border-left: 2px solid var(--line);
+  }
+
+  /* ---- Highlights ---- */
+  .hl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; margin-top: 0.4rem; }
+  .hl-card {
+    background: var(--bg-soft); border: 1px solid var(--line); border-radius: 16px; padding: 1.5rem;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .hl-card:hover { border-color: var(--tint-line); transform: translateY(-3px); }
+  .hl-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.55rem; }
+  .hl-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin: 0; }
+
+  /* ---- Downloads ---- */
+  .dl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .dl-tile {
+    position: relative; background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 1.6rem; display: flex; flex-direction: column; gap: 0.6rem;
+  }
+  .dl-tile.recommended { border-color: rgba(255, 214, 77, 0.5); box-shadow: 0 0 0 1px rgba(255,214,77,0.15); }
+  .dl-tile h3 { font-size: 1.2rem; }
+  .dl-tile p { color: var(--muted); font-size: 0.92rem; margin: 0; flex: 1; line-height: 1.5; }
+  .dl-tile .btn { margin-top: 0.4rem; justify-content: center; }
+  .dl-tile small { color: var(--muted); font-size: 0.78rem; }
+  .dl-badge {
+    position: absolute; top: -10px; right: 14px; background: var(--accent); color: #1a1606;
+    font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 0.25rem 0.6rem; border-radius: 999px;
+  }
+  .dl-note { color: var(--muted); font-size: 0.84rem; margin-top: 1.4rem; }
+  .dl-note em { font-style: italic; color: var(--ink); }
+
+  /* ---- More products ---- */
+  .p-more { padding-top: 0; }
+  .more-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 0.4rem; }
+  .more-card {
+    display: flex; flex-direction: column; gap: 0.35rem; padding: 1.3rem;
+    background: var(--bg-soft); border: 1px solid var(--line); border-radius: 16px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .more-card:hover { border-color: var(--tint-line); transform: translateY(-3px); }
+  .more-emoji { font-size: 1.5rem; }
+  .more-card strong { font-size: 1.02rem; font-weight: 700; }
+  .more-card span:last-child { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+
+  @media (max-width: 900px) {
+    .body-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+    .hl-grid, .dl-grid, .more-grid, .pattern-grid { grid-template-columns: 1fr; }
+    .feature-shots { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.7rem; }
+  }
+</style>
